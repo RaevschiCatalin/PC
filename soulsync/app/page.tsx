@@ -8,7 +8,7 @@ export default function Home() {
       <p className="text-red-700">Hello World!</p>
       <Link href={'/register'}>Register</Link>
       <Link href={'/login'}>Login</Link>
-      <Link href={'/forgot Password'}>Forgot Password</Link>
+      <Link href={'/forgotPassword'}>Forgot Password</Link>
     </main>
   );
 }
