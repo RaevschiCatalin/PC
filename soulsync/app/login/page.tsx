@@ -53,7 +53,7 @@ export default function Login() {
           </div>
           <button type="submit" className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Login</button>
           <div className="text-center mt-2">
-            <p className="text-sm">Don't have an account? <Link href="/register" className="text-blue-500 hover:underline">Register here</Link></p>
+            <p className="text-sm">Don&apos;t have an account? <Link href="/register" className="text-blue-500 hover:underline">Register here</Link></p>
           </div>
           <div className="text-center mt-2">
             <p className="text-sm"> <Link href="/forgotPassword" className="text-blue-500 hover:underline">Forgot Password</Link></p>
