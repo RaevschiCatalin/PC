@@ -1,0 +1,254 @@
+{
+  "questions": [
+    {
+      "question": "I am the life of the party.",
+      "type": "E",
+      "score": "+"
+    },
+    {
+      "question": "I feel little concern for others.",
+      "type": "A",
+      "score": "-"
+    },
+    {
+      "question": "I am always prepared.",
+      "type": "C",
+      "score": "+"
+    },
+    {
+      "question": "I get stressed out easily.",
+      "type": "N",
+      "score": "-"
+    },
+    {
+      "question": "I have a rich vocabulary.",
+      "type": "O",
+      "score": "+"
+    },
+    {
+      "question": "I don't talk a lot.",
+      "type": "E",
+      "score": "-"
+    },
+    {
+      "question": "I Am interested in people.",
+      "type": "A",
+      "score": "+"
+    },
+    {
+      "question": "I leave my belongings around.",
+      "type": "C",
+      "score": "-"
+    },
+    {
+      "question": "I am relaxed most of the time.",
+      "type": "N",
+      "score": "+"
+    },
+    {
+      "question": "I have difficulty understanding abstract ideas.",
+      "type": "O",
+      "score": "-"
+    },
+    {
+      "question": "I feel comfortable around people.",
+      "type": "E",
+      "score": "+"
+    },
+    {
+      "question": "I insult people.",
+      "type": "A",
+      "score": "-"
+    },
+    {
+      "question": "I pay attention to details.",
+      "type": "C",
+      "score": "+"
+    },
+    {
+      "question": "I worry about things.",
+      "type": "N",
+      "score": "-"
+    },
+    {
+      "question": "I have a vivid imagination.",
+      "type": "O",
+      "score": "+"
+    },
+    {
+      "question": "I keep in the background.",
+      "type": "E",
+      "score": "-"
+    },
+    {
+      "question": "I sympathize with others' feelings.",
+      "type": "A",
+      "score": "+"
+    },
+    {
+      "question": "I make a mess of things.",
+      "type": "C",
+      "score": "-"
+    },
+    {
+      "question": "I seldom feel blue.",
+      "type": "N",
+      "score": "+"
+    },
+    {
+      "question": "I am not interested in abstract ideas.",
+      "type": "O",
+      "score": "-"
+    },
+    {
+      "question": "I start conversations.",
+      "type": "E",
+      "score": "+"
+    },
+    {
+      "question": "I am not interested in other people's problems.",
+      "type": "A",
+      "score": "-"
+    },
+    {
+      "question": "I get chores done right away.",
+      "type": "C",
+      "score": "+"
+    },
+    {
+      "question": "I am easily disturbed.",
+      "type": "N",
+      "score": "-"
+    },
+    {
+      "question": "I have excellent ideas.",
+      "type": "O",
+      "score": "+"
+    },
+    {
+      "question": "I have little to say.",
+      "type": "E",
+      "score": "-"
+    },
+    {
+      "question": "I have a soft heart.",
+      "type": "A",
+      "score": "+"
+    },
+    {
+      "question": "I often forget to put things back in their proper place.",
+      "type": "C",
+      "score": "-"
+    },
+    {
+      "question": "I get upset easily.",
+      "type": "N",
+      "score": "-"
+    },
+    {
+      "question": "I do not have a good imagination.",
+      "type": "O",
+      "score": "-"
+    },
+    {
+      "question": "I talk to a lot of different people at parties.",
+      "type": "E",
+      "score": "+"
+    },
+    {
+      "question": "I am not really interested in others.",
+      "type": "A",
+      "score": "-"
+    },
+    {
+      "question": "I like order.",
+      "type": "C",
+      "score": "+"
+    },
+    {
+      "question": "I change my mood a lot.",
+      "type": "N",
+      "score": "-"
+    },
+    {
+      "question": "I am quick to understand things.",
+      "type": "O",
+      "score": "+"
+    },
+    {
+      "question": "I don't like to draw attention to myself.",
+      "type": "E",
+      "score": "-"
+    },
+    {
+      "question": "I take time out for others.",
+      "type": "A",
+      "score": "+"
+    },
+    {
+      "question": "I shirk my duties.",
+      "type": "C",
+      "score": "-"
+    },
+    {
+      "question": "I have frequent mood swings.",
+      "type": "N",
+      "score": "-"
+    },
+    {
+      "question": "I use difficult words.",
+      "type": "O",
+      "score": "+"
+    },
+    {
+      "question": "I don't mind being the center of attention.",
+      "type": "E",
+      "score": "+"
+    },
+    {
+      "question": "I feel others' emotions.",
+      "type": "A",
+      "score": "+"
+    },
+    {
+      "question": "I follow a schedule.",
+      "type": "C",
+      "score": "+"
+    },
+    {
+      "question": "I get irritated easily.",
+      "type": "N",
+      "score": "-"
+    },
+    {
+      "question": "I spend time reflecting on things.",
+      "type": "O",
+      "score": "+"
+    },
+    {
+      "question": "I am quiet around strangers.",
+      "type": "E",
+      "score": "-"
+    },
+    {
+      "question": "I make people feel at ease.",
+      "type": "A",
+      "score": "+"
+    },
+    {
+      "question": "I am exacting in my work.",
+      "type": "C",
+      "score": "+"
+    },
+    {
+      "question": "I often feel blue.",
+      "type": "N",
+      "score": "-"
+    },
+    {
+      "question": "I am full of ideas.",
+      "type": "O",
+      "score": "+"
+    }
+  ]
+}

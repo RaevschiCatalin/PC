@@ -1,0 +1,10 @@
+intrebarile sunt bazate pe 5 scoruri:
+
+Extroversion (E)           default 20
+Agreeableness (A)          default 14
+Conscientiousness (C)      default 14
+Neuroticism (N)            default 38
+Openness to Experience (O) default 8
+
+intrebarile au specificat tipul (litera) si scor (+/-), ele au range de raspuns de la 1 la 5 ce reprezinta disagree... agree,
+aceste puncte se adauga la default values bazat pe tip si scor, cam asa functioneaza testul

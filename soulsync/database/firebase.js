@@ -23,13 +23,20 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 // Add new user
-function writeUserData(userID, email, password) {
-    const reference = ref(database, 'users/' + userID);
+function writeUserData(userID, email, password, E, A, C, N, O) {
+    const db = getDatabase();
+    const reference = ref(db, 'users/' + userID);
     set(reference, {
         email: email,
-        password: password
+        password: password,
+        E: E,
+        A: A,
+        C: C,
+        N: N,
+        O: O
     });
 }
+
 
 // Get data from user by ID
 function readUserData(userID) {
