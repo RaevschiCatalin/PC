@@ -2,16 +2,18 @@
 
 import Link from 'next/link';
 import { useState, ChangeEvent, FormEvent } from 'react';
+import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth';
+import { auth } from '../../database/firebase';
+
 
 export default function Register() {
+  const[createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
   const [formData, setFormData] = useState({
     email: '',
-    username: '',
     password: '',
     repeatPassword: '',
     acceptTerms: false,
   });
-
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | HTMLInputElement>) => {
     const { name, value, type } = e.target;
     const newValue = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
@@ -21,35 +23,37 @@ export default function Register() {
     });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Validate form data and perform registration logic
-    // You can add validation logic here
-    console.log(formData);
+    if (formData.password === formData.repeatPassword) {
+      try {
+        const res = await createUserWithEmailAndPassword(formData.email, formData.password);
+        console.log(res);
+        //set email password and repeat password to empty string
+        setFormData({
+          email: '',
+          password: '',
+          repeatPassword: '',
+          acceptTerms: false,
+        });
+      } catch (error) {
+        // @ts-ignore
+        alert(error.message);
+      }
+    }
   };
 
   return (
     <div className="flex justify-center items-center h-screen pb-10">
       <div className="w-full max-w-md">
         <h1 className="text-2xl mb-4 text-center">Register</h1>
-        <form onSubmit={handleSubmit} className="space-y-4 border rounded-2xl border-orange-400 border-solid p-6 bg-white">
+        <form onSubmit={handleSubmit} className="space-y-4 border rounded-2xl border-black border-solid p-6 bg-white">
           <div>
             <label className="block mb-1">Email:</label>
             <input
               type="email"
               name="email"
               value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-              required
-            />
-          </div>
-          <div>
-            <label className="block mb-1">Username:</label>
-            <input
-              type="text"
-              name="username"
-              value={formData.username}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
               required

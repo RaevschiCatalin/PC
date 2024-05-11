@@ -2,8 +2,14 @@
 
 import Link from 'next/link';
 import { useState, ChangeEvent, FormEvent } from 'react';
+import {useSignInWithEmailAndPassword} from 'react-firebase-hooks/auth';
+import { auth } from '../../database/firebase';
+import {useRouter} from "next/navigation";
 
 export default function Login() {
+  const[signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -17,18 +23,23 @@ export default function Login() {
     });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Validate form data and perform login logic
-    // You can add validation logic here
-    console.log(formData);
+    try{
+      const res = await signInWithEmailAndPassword(formData.email, formData.password);
+        console.log({res});
+        router.push("/")
+    }catch (error){
+      // @ts-ignore
+      alert(error.message);
+    }
   };
 
   return (
     <div className="flex justify-center items-center h-screen pb-10">
       <div className="w-full max-w-md">
         <h1 className="text-2xl mb-4 text-center">Login</h1>
-        <form onSubmit={handleSubmit} className="space-y-4 border rounded-2xl border-orange-400 border-solid p-6 bg-white">
+        <form onSubmit={handleSubmit} className="space-y-4 border rounded-2xl border-black border-solid p-6 bg-white">
           <div>
             <label className="block mb-1">Email:</label>
             <input
