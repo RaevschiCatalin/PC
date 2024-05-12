@@ -1,4 +1,5 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { getDatabase, ref, set, onValue } from "firebase/database";
 import { config } from 'dotenv';
 config({ path: '../.env' });
@@ -17,36 +18,11 @@ const firebaseConfig = {
 };
 
 
-const app = initializeApp(firebaseConfig);
-
-// Database reference
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+const auth = getAuth(app);
 const database = getDatabase(app);
 
-// Add new user
-function writeUserData(userID, email, password, E, A, C, N, O) {
-    const db = getDatabase();
-    const reference = ref(db, 'users/' + userID);
-    set(reference, {
-        email: email,
-        password: password,
-        E: E,
-        A: A,
-        C: C,
-        N: N,
-        O: O
-    });
-}
+
+export { auth, database, app };
 
 
-// Get data from user by ID
-function readUserData(userID) {
-    const reference = ref(database, 'users/' + userID);
-    onValue(reference, (snapshot) => {
-        const data = snapshot.val();
-        console.log(snapshot.val());
-    });
-}
-
-// test
-writeUserData(0, "placeholder", "placeholder");
-readUserData(0);
