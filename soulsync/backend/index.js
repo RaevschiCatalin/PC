@@ -1,27 +1,6 @@
-function writeUserData(userID, email, password, E, A, C, N, O) {
-    const db = getDatabase();
-    const reference = ref(db, 'users/' + userID);
-    set(reference, {
-        email: email,
-        password: password,
-        E: E,
-        A: A,
-        C: C,
-        N: N,
-        O: O
-    });
-}
+//Test creeare obiect
+//NOTE: cum importam metode din alte pachete
+import User from './user.js'
 
-
-
-function readUserData(userID) {
-    const reference = ref(database, 'users/' + userID);
-    onValue(reference, (snapshot) => {
-        const data = snapshot.val();
-        console.log(snapshot.val());
-    });
-}
-
-
-writeUserData(0, "placeholder", "placeholder");
-readUserData(0);
+const user = new User("placeholder", "placeholder")
+console.log(user)

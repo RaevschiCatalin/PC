@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth';
 import { auth } from '../../database/firebase';
+import { writeUserData } from '../../database/firebase';
 
 
 export default function Register() {
@@ -36,6 +37,7 @@ export default function Register() {
           repeatPassword: '',
           acceptTerms: false,
         });
+        writeUserData(formData.email, formData.password, 20, 14,14,38,8)
       } catch (error) {
         // @ts-ignore
         alert(error.message);
