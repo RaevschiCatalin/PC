@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth';
 import { auth } from '../../database/firebase';
-import { writeUserData } from '../../database/firebase';
+import { writeUserData } from '../../backend/index';
 
 
 export default function Register() {
