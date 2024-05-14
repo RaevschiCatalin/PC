@@ -1,15 +1,12 @@
-//Test creeare obiect
-//NOTE: cum importam metode din alte pachete
-import User from './user.js'
 import {onValue, ref, set} from "firebase/database";
 import {database} from "../database/firebase.js";
 
-const user = new User("placeholder", "placeholder")
-console.log(user)
 //NU-I PLACE EMAIL CA ID CA ARE PUNCT, tre de fixuit
 
 export function writeUserData(email, password, E, A, C, N, O) {
-    const reference = ref(database, 'users/' + email);
+    let ID = email.replace("@", "%")
+    ID = ID.replace(".", "%")
+    const reference = ref(database, 'users/' + ID);
     set(reference, {
         email: email,
         password: password,
@@ -27,3 +24,5 @@ export function readUserData(email) {
         console.log(snapshot.val())
     })
 }
+
+writeUserData("placeholder@gmail.com", "placeholder", 0, 0, 0, 0, 0)
