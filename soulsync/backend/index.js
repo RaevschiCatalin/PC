@@ -6,6 +6,8 @@ import {database} from "../database/firebase.js";
 
 const user = new User("placeholder", "placeholder")
 console.log(user)
+//NU-I PLACE EMAIL CA ID CA ARE PUNCT, tre de fixuit
+
 export function writeUserData(email, password, E, A, C, N, O) {
     const reference = ref(database, 'users/' + email);
     set(reference, {

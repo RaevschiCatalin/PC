@@ -37,7 +37,7 @@ export default function Register() {
           repeatPassword: '',
           acceptTerms: false,
         });
-        writeUserData(formData.email, formData.password, 20, 14,14,38,8)
+        writeUserData(formData.email, formData.password, 20, 14,14,38,8);
       } catch (error) {
         // @ts-ignore
         alert(error.message);
