@@ -2,7 +2,6 @@ import {onValue, ref, set} from "firebase/database";
 import {database} from "../database/firebase.js";
 
 //NU-I PLACE EMAIL CA ID CA ARE PUNCT, tre de fixuit
-
 export function writeUserData(email, password, E, A, C, N, O) {
     let ID = email.replace("@", "%")
     ID = ID.replace(".", "%")
