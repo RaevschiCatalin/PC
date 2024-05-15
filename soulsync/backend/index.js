@@ -6,16 +6,19 @@ import {database} from "../database/firebase.js";
 export function writeUserData(email, password, E, A, C, N, O) {
     let ID = email.replace("@", "%")
     ID = ID.replace(".", "%")
-    const reference = ref(database, 'users/' + ID);
+    let reference = ref(database, 'users/' + ID)
     set(reference, {
         email: email,
         password: password,
+    })
+    reference = ref(database, 'profiles/' + ID)
+    set(reference, {
         E: E,
         A: A,
         C: C,
         N: N,
         O: O
-    });
+    })
 }
 
 export function readUserData(email) {
