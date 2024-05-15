@@ -1,11 +1,14 @@
 export default class User {
-    constructor(email, password) {
+
+    constructor(id, email, password, E, A, C, N, O) {
+        this.id = id;
         this.email = email;
         this.password = password;
-        this.E = 20;
-        this.A = 14;
-        this.C = 14;
-        this.N = 38;
-        this.O = 8;
+        this.E = E;
+        this.A = A;
+        this.C = C;
+        this.N = N;
+        this.O = O;
     }
+
 }
