@@ -61,7 +61,6 @@ const PersonalityTest: React.FC = () => {
   return (
     <div className="font-sans text-black p-6 max-w-5xl mx-auto mt-12">
       <h2 className="text-center text-5xl mt-12 mb-14 font-bold">Personality Test</h2>
-      <p className='text-center'></p>
       {questions.length > 0 && (
         <>
           <p className="mb-8 text-center text-2xl md:text-3xl lg:text-4xl">{questions[questionIndex].question}</p>
