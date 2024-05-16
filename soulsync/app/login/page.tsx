@@ -9,7 +9,7 @@ import {useRouter} from "next/navigation";
 export default function Login() {
   const[signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const router = useRouter();
-
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -27,8 +27,10 @@ export default function Login() {
     e.preventDefault();
     try{
       const res = await signInWithEmailAndPassword(formData.email, formData.password);
-        console.log({res});
-        router.push("/")
+      if(res === null || res ===undefined) throw new Error("Invalid email or password");
+      //start a user session
+      setIsUserLoggedIn(true);
+      router.push("/")
     }catch (error){
       // @ts-ignore
       alert(error.message);

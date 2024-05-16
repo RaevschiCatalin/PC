@@ -19,7 +19,8 @@
     ],
     "baseUrl": "./",
     "paths": {
-      "@components/*": ["soulsync/components/*"]
+      "@components/*": ["soulsync/components/*"],
+      "@*":"./",
     }
 
   },

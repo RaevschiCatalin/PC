@@ -1,29 +1,52 @@
-"use client"
-
+'use client'
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { Navbar, Button } from "flowbite-react";
+import { auth } from '../database/firebase';
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function Nav() {
+    const [isUserLoggedIn, setIsLogged] = useState(false);
+    const [toggleDropdown, setToggleDropdown] = useState(false);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setIsLogged(!!user);
+        });
+        return () => unsubscribe();
+    }, []);
+
     return (
-      <Navbar fluid rounded>
-      <Navbar.Brand as={Link} href="/">
-        <img src="/favicon.ico" className="mr-3 h-6 sm:h-9" alt="Flowbite React Logo" />
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">SoulSync</span>
-      </Navbar.Brand>
-      <Navbar.Toggle />
-      <Navbar.Collapse>
-        <Navbar.Link href="/">
-          Home
-        </Navbar.Link>
-        <Navbar.Link as={Link} href="/about">
-          About
-        </Navbar.Link>
-        <Navbar.Link href="/login">Login</Navbar.Link>
-        <Navbar.Link href="/register">Register</Navbar.Link>
-      </Navbar.Collapse>
-    </Navbar>
+        <Navbar fluid rounded>
+            <Navbar.Brand as={Link} href="/">
+                <img src="/assets/icons/logo.svg" className="mr-3 h-8 sm:h-9" alt="Logo" />
+                <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">SoulSync</span>
+            </Navbar.Brand>
+            <Navbar.Toggle />
+            <Navbar.Collapse>
+
+                {isUserLoggedIn ? (
+                    <div className="flex gap-3 md:gap-5">
+                        <Link href="/profile">
+                            <Image
+                                src="/assets/icons/user.png"
+                                width={32}
+                                height={32}
+                                alt="user"
+                                className="rounded-full border-2 border-gray-700"
+                            />
+                        </Link>
+                        <button type="button" className="black_btn" onClick={() => signOut()}>Logout</button>
+                    </div>
+                ) : (
+                    <div className="flex gap-3 md:gap-5">
+                        <Link href="/login" className="outline_btn">Login</Link>
+                        <Link href='/register' className="black_btn">Register</Link>
+                    </div>
+                )}
+            </Navbar.Collapse>
+        </Navbar>
     );
 }
