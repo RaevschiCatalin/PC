@@ -1,10 +1,12 @@
-'use client'
+'use client';
 
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { config } from 'dotenv';
-import {pushDataToDatabase} from "../../backend/handleSubmit";
+import { pushDataToDatabase } from '../../backend/handleSubmit';
+
 config({ path: '../../.env' });
-export default function completeDetails() {
+
+export default function useCompleteDetails() {
     const [formData, setFormData] = useState({
         name: '',
         yearOfBirth: '',
