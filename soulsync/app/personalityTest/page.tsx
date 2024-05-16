@@ -50,25 +50,25 @@ const PersonalityTest: React.FC = () => {
 
   if (loading) {
     return (
-        <div className="flex items-center justify-center h-screen">
-          <div className="flex flex-row items-center">
-            <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-24 w-24 mb-4"></div>
-            <h2 className="text-center text-2xl font-semibold">Loading...</h2>
-            <p className="text-center text-lg">Please wait while we load the questions.</p>
-          </div>
+      <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center">
+          <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-28 w-28 mb-4"></div>
         </div>
-     );
+      </div>
+    );
   }
 
   return (
-    <div className="font-sans text-black p-5 max-w-4xl mx-auto mt-10">
-      <h2 className="text-center text-4xl mb-10 font-bold">Personality Test</h2>
+    <div className="font-sans text-black p-6 max-w-5xl mx-auto mt-12">
+      <h2 className="text-center text-5xl mt-12 mb-14 font-bold">Personality Test</h2>
+      <p className='text-center'></p>
       {questions.length > 0 && (
         <>
-          <p className="mb-5 text-center text-xl md:text-2xl lg:text-3xl">{questions[questionIndex].question}</p>
-          <form className="flex justify-center items-center mb-10 space-x-4">
+          <p className="mb-8 text-center text-2xl md:text-3xl lg:text-4xl">{questions[questionIndex].question}</p>
+          <form className="flex flex-wrap justify-center items-center mb-12 mt-4 space-x-8">
+            <p className='text-2xl'>Strongly disagree</p>
             {options.map((option, index) => (
-              <div key={index} className="flex items-center space-x-2">
+              <div key={index} className="flex items-center space-x-3">
                 <input
                   type="radio"
                   id={`option-${index}`}
@@ -76,15 +76,15 @@ const PersonalityTest: React.FC = () => {
                   value={option}
                   checked={selectedAnswer === option}
                   onChange={handleOptionChange}
-                  className="hover:bg-black"
+                  className="hover:bg-black h-8 w-8"
                 />
-                <label htmlFor={`option-${index}`} className="text-lg md:text-xl lg:text-2xl">{option}</label>
               </div>
             ))}
+            <p className='text-2xl'>Strongly Agree</p>
           </form>
           <button
             onClick={handleNextQuestion}
-            className="block mx-auto px-6 py-3 outline_btn text-white text-lg md:text-xl rounded-lg cursor-pointer hover:bg-black transition duration-300 ease-in-out"
+            className="block mx-auto px-7 py-4 outline_btn text-white text-xl md:text-2xl rounded-lg cursor-pointer hover:bg-black transition duration-300 ease-in-out"
           >
             Next Question
           </button>
