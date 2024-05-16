@@ -112,7 +112,9 @@ body{
 .blue_gradient {
   @apply bg-gradient-to-r from-blue-600 to-cyan-600  bg-clip-text text-transparent;
 }
-
+.logo_gradinet{
+  @apply bg-gradient-to-r from-rose-500 to-red-500 bg-clip-text text-transparent;
+}
 .gray_gradient_bg {
   @apply bg-gradient-to-r from-green-300 to-purple-400
 }

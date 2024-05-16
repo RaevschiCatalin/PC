@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { signOut } from "firebase/auth";
 import { Navbar, Button } from "flowbite-react";
 import { auth } from '../database/firebase';
 import { onAuthStateChanged } from "firebase/auth";
@@ -17,12 +17,15 @@ export default function Nav() {
         });
         return () => unsubscribe();
     }, []);
-
+    const handleSignOut = () => {
+        signOut(auth)
+            .catch(err => alert(err))
+    }
     return (
         <Navbar fluid rounded>
-            <Navbar.Brand as={Link} href="/">
+            <Navbar.Brand as={Link} href="/" >
                 <img src="/assets/icons/logo.svg" className="mr-3 h-8 sm:h-9" alt="Logo" />
-                <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">SoulSync</span>
+                <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white gap-1"><span className="logo_gradinet">Soul</span>Sync</span>
             </Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse>
@@ -38,7 +41,7 @@ export default function Nav() {
                                 className="rounded-full border-2 border-gray-700"
                             />
                         </Link>
-                        <button type="button" className="black_btn" onClick={() => signOut()}>Logout</button>
+                        <button type="button" className="black_btn" onClick={handleSignOut}>Logout</button>
                     </div>
                 ) : (
                     <div className="flex gap-3 md:gap-5">

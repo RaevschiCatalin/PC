@@ -2,6 +2,7 @@ import Image from "next/image";
 import Footer from "../components/Footer";
 import Link from "next/link";
 import WelcomeHeader from "../components/WelcomeHeader";
+import MatchButton from "../components/MatchButton";
 
 export default function Home() {
   return (
@@ -9,6 +10,9 @@ export default function Home() {
         <div className="w-4/5 md:w-3/4 h-2 mt-12 pb-2 mb-6">
           <WelcomeHeader/>
         </div>
+          <div className="mt-96 items-center">
+              <MatchButton/>
+          </div>
       </main>
   );
 }
