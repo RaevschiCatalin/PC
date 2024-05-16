@@ -4,7 +4,7 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import { config } from 'dotenv';
 import {pushDataToDatabase} from "../../backend/handleSubmit";
 config({ path: '../../.env' });
-export default function completeProfile() {
+export default function completeDetails() {
     const [formData, setFormData] = useState({
         name: '',
         yearOfBirth: '',
