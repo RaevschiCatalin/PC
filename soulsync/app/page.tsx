@@ -13,9 +13,6 @@ export default function Home() {
           <div className="mt-96 items-center">
               <MatchButton/>
           </div>
-          <div>
-            <Link href="personalityTest">PersonalityTest</Link>
-          </div>
       </main>
   );
 }

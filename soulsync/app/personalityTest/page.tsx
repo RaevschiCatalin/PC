@@ -86,7 +86,7 @@ const PersonalityTest: React.FC = () => {
             className="block mx-auto px-7 py-4 outline_btn text-white text-xl md:text-2xl rounded-lg cursor-pointer hover:bg-black transition duration-300 ease-in-out"
           >
             Next Question
-          </button>
+          </button> -
         </>
       )}
     </div>
