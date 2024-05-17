@@ -75,7 +75,50 @@ body{
   }
 }
 
+/* Custom styles for radio buttons */
+input[type="radio"] {
+  appearance: none;
+  border: 2px solid #000;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
 
+input[type="radio"]:checked {
+  background-color: #000;
+}
+
+input[type="radio"]:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+input[type="radio"]:checked::before {
+  content: "";
+  display: block;
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: #000;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Loader styles */
+.loader {
+  border-top-color: black !important;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 .app {
   @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
