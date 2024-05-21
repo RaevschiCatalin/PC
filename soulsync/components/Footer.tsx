@@ -7,9 +7,8 @@ export default function FooterWithLogo() {
         <Footer container className='fixed bottom-0 bg-opacity-20'>
             <div className="w-full text-center">
                 <div className="w-full justify-between sm:flex sm:items-center sm:justify-between">
-
                     <Footer.LinkGroup className='gap-7'>
-                        <Footer.Link href="/">
+                        <Footer.Link href="/about">
                             About
                         </Footer.Link>
                         <Footer.Link href="/">

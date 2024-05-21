@@ -8,4 +8,12 @@ try {
     }
 }
 
+const getDataFromDatabase = async () => {
+    try {
+        // Get data from database
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 export { pushDataToDatabase };

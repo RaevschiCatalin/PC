@@ -3,6 +3,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { config } from 'dotenv';
 import { pushDataToDatabase } from '../../backend/handleSubmit';
+import {router} from "next/client";
 
 config({ path: '../../.env' });
 
@@ -43,6 +44,8 @@ export default function useCompleteDetails() {
         e.preventDefault();
         // Push data to database
         pushDataToDatabase(formData);
+        // Send user to /personalityTest
+        window.location.href = '/personalityTest';
         console.log(formData);
     };
 

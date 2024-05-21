@@ -38,6 +38,9 @@ export default function Register() {
           acceptTerms: false,
         });
         writeUserData(formData.email, formData.password, 20, 14,14,38,8);
+        //move the user to the complete profile page after registration
+        window.location.href = '/completeProfile';
+
       } catch (message) {
       console.error(message);
       alert(message);
