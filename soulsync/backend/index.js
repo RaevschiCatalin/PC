@@ -1,5 +1,8 @@
 import {ref, set} from "firebase/database";
 import {database} from "../database/firebase.js";
+import user from "./users/user.js";
+
+let current_user = user;
 
 export function writeUserData(email, password, E, A, C, N, O) {
     let ID = email.replace("@", "%")
@@ -27,3 +30,5 @@ export function matchUsers(user0, user1) {
     const O = Math.abs(user0.O - user1.O) * 2.5
     return 100-((E*20/100)+(A*20/100)+(C*20/100)+(N*20/100)+(O*20/100))
 }
+
+export { current_user };

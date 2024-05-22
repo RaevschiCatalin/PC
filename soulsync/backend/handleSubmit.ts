@@ -1,10 +1,11 @@
-import {ref, set} from "firebase/database";
+import {onValue, ref, set} from "firebase/database";
 import {database} from "../database/firebase.js";
-//db push logic in care le bagi in tabele
-//plus logic cu getter a datelor de aici din db
+import {current_user} from "./index";
+
+//push data pentru profile, restul datelor pot fi updated cu write user
 const pushDataToDatabase = async (data: any) => {
 try {
-        const reference = ref(database, 'profiles/' + 'placeholder%gmail%com');
+        const reference = ref(database, 'profiles/' + current_user.id);
         set(reference, {
             name: data.name,
             dob: data.yearOfBirth,
@@ -16,9 +17,19 @@ try {
     }
 }
 
-const getDataFromDatabase = async () => {
+// get data, in snapshot se afla tot ce e in database
+const getDataFromDatabase = async (id: any) => {
     try {
-        // Get data from database
+        let reference = ref(database, 'users/' + id);
+        onValue(reference, (snapshot) => {
+            const data = snapshot.val();
+            console.log(snapshot.val());
+        });
+        reference = ref(database, 'profiles/' + id);
+        onValue(reference, (snapshot) => {
+            const data = snapshot.val();
+            console.log(snapshot.val());
+        });
     } catch (error) {
         console.error(error);
     }

@@ -5,7 +5,7 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth';
 import { auth } from '../../database/firebase';
 import { writeUserData } from '../../backend/index';
-
+import { current_user } from '../../backend/index';
 
 export default function Register() {
   const[createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
@@ -37,6 +37,8 @@ export default function Register() {
           repeatPassword: '',
           acceptTerms: false,
         });
+        // set current user
+        current_user.setID(formData.email);
         writeUserData(formData.email, formData.password, 20, 14,14,38,8);
         //move the user to the complete profile page after registration
         window.location.href = '/completeProfile';

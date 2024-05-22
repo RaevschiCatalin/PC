@@ -11,4 +11,10 @@ export default class User {
         this.O = O;
     }
 
+    setID (id) {
+        id = id.replace("@", "%")
+        id = id.replace(".", "%")
+        this.id = id;
+    }
+
 }
