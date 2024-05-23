@@ -45,7 +45,7 @@ export default function useCompleteDetails() {
         // Push data to database
         pushDataToDatabase(formData);
         // Send user to /personalityTest
-        window.location.href = '/personalityTest';
+        window.location.href = '/testIntro';
         console.log(formData);
     };
 
