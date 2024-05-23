@@ -97,7 +97,6 @@ export default function Register() {
               checked={formData.acceptTerms}
               onChange={handleChange}
               className="mr-2"
-              required
             />
             <label className="text-sm">I accept the terms and conditions</label>
           </div>

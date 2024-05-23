@@ -59,13 +59,12 @@ const PersonalityTest: React.FC = () => {
   }
 
   return (
-    <div className="font-sans text-black p-6 max-w-5xl mx-auto mt-12">
-      <h2 className="text-center text-5xl mt-12 mb-14 font-bold">Personality Test</h2>
+    <div className="font-sans text-black flex flex-col items-center justify-center min-h-screen">
       {questions.length > 0 && (
         <>
-          <p className="mb-8 text-center text-2xl md:text-3xl lg:text-4xl">{questions[questionIndex].question}</p>
-          <form className="flex flex-wrap justify-center items-center mb-12 mt-4 space-x-8">
-            <p className='text-2xl'>Strongly disagree</p>
+          <p className="mb-8 text-purple-600 text-3xl md:text-4xl lg:text-5xl">{questions[questionIndex].question}</p>
+          <form className="flex flex-wrap justify-center items-center mb-12 mt-4 space-x-6 md:space-x-4">
+            <p className='lg:text-2xl md:text-xl'>Strongly disagree</p>
             {options.map((option, index) => (
               <div key={index} className="flex items-center space-x-3">
                 <input
@@ -79,14 +78,14 @@ const PersonalityTest: React.FC = () => {
                 />
               </div>
             ))}
-            <p className='text-2xl'>Strongly Agree</p>
+            <p className='lg:text-2xl  md:text-xl'>Strongly Agree</p>
           </form>
           <button
             onClick={handleNextQuestion}
-            className="block mx-auto px-7 py-4 outline_btn text-white text-xl md:text-2xl rounded-lg cursor-pointer hover:bg-black transition duration-300 ease-in-out"
+            className="block mx-auto px-7 py-4 outline_btn text-white text-xl md:text-2xl rounded-lg cursor-pointer hover:bg-black transition duration-300 ease-in-out z-50"
           >
             Next Question
-          </button> -
+          </button> 
         </>
       )}
     </div>
