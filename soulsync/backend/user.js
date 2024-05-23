@@ -1,4 +1,6 @@
 export default class User {
+    //am adaugat static pentru ca nu lucra altfel
+    static id;
 
     constructor(id, email, password, E, A, C, N, O) {
         this.id = id;

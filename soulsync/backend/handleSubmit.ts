@@ -1,11 +1,11 @@
 import {onValue, ref, set} from "firebase/database";
-import {database} from "../database/firebase.js";
+import {database} from "../database/firebase";
 import {current_user} from "./index";
 
 //push data pentru profile, restul datelor pot fi updated cu write user
 const pushDataToDatabase = async (data: any) => {
 try {
-        const reference = ref(database, 'profiles/' + current_user.id);
+        const reference = ref(database, 'profile/' + current_user.id);
         set(reference, {
             name: data.name,
             dob: data.yearOfBirth,
