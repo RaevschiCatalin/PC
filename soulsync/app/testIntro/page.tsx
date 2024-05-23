@@ -10,7 +10,7 @@ export default function TestIntro() {
                 The following test will help you understand your personality better and match with other people.
             </p>
             <p className="text-center text-2xl mb-10">
-                Take your time, don&apos;t rush the questions! The answers range from 1 to 5, with 1 being "Strongly Disagree" and 5 being "Strongly Agree".
+                Take your time, don&apos;t rush the questions! The answers range from 1 to 5, with 1 being &quot;Strongly Disagree&quot; and 5 being &quot;Strongly Agree&quot;.
             </p>
             <button className="black_btn z-50">
                 <Link href={'/personalityTest'} className="text-3xl">
