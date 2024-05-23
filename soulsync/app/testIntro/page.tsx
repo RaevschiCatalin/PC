@@ -7,10 +7,10 @@ export default function TestIntro() {
                 Almost there! Just a few more questions to go.
             </h1>
             <p className="text-center text-2xl mb-4">
-                The following questionaire will help you understand your personality better and match with other people.
+                The following test will help you understand your personality better and match with other people.
             </p>
             <p className="text-center text-2xl mb-10">
-                Take your time, don't rush the questions! The answers range from 1 to 5, with 1 being "Strongly Disagree" and 5 being "Strongly Agree".
+                Take your time, don&apos;t rush the questions! The answers range from 1 to 5, with 1 being "Strongly Disagree" and 5 being "Strongly Agree".
             </p>
             <button className="black_btn z-50">
                 <Link href={'/personalityTest'} className="text-3xl">
