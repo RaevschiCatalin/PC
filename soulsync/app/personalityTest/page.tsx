@@ -78,7 +78,7 @@ const PersonalityTest: React.FC = () => {
                 />
               </div>
             ))}
-            <p className='lg:text-2xl  md:text-xl'>Strongly Agree</p>
+            <p className='lg:text-2xl  md:text-xl'>Strongly agree</p>
           </form>
           <button
             onClick={handleNextQuestion}
