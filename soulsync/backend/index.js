@@ -1,6 +1,6 @@
 import {ref, set} from "firebase/database";
 import {database} from "../database/firebase.js";
-import user from "./users/user.js";
+import user from "./user.js";
 
 let current_user = user;
 
@@ -31,4 +31,4 @@ export function matchUsers(user0, user1) {
     return 100-((E*20/100)+(A*20/100)+(C*20/100)+(N*20/100)+(O*20/100))
 }
 
-export { current_user };
+export { current_user, matchUsers, writeUserData,};

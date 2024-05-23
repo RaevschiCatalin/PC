@@ -16,5 +16,10 @@ export default class User {
         id = id.replace(".", "%")
         this.id = id;
     }
-
+    //am adaugat static pentru ca nu lucra altfel
+    static setID (id) {
+        id = id.replace("@", "%")
+        id = id.replace(".", "%")
+        return id;
+    }
 }

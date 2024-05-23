@@ -30,6 +30,7 @@ export default function Register() {
       try {
         const res = await createUserWithEmailAndPassword(formData.email, formData.password);
         console.log(res);
+
         //set email password and repeat password to empty string
         setFormData({
           email: '',
