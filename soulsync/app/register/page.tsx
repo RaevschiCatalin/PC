@@ -40,7 +40,7 @@ export default function Register() {
         });
         // set current user
         current_user.setID(formData.email);
-        writeUserData(formData.email, formData.password, 20, 14,14,38,8);
+        writeUserData(formData.email, formData.password);
         //move the user to the complete profile page after registration
         window.location.href = '/completeProfile';
 

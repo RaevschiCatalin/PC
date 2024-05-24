@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Question } from '../../types/question';
+import {updateQuiz} from "../../backend";
 
 const PersonalityTest: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -41,6 +42,39 @@ const PersonalityTest: React.FC = () => {
       if (questionIndex < questions.length - 1) {
         setQuestionIndex(questionIndex + 1);
       } else {
+        // adds up scores and pushes them into db after quiz is over
+        let E = 20;
+        let A = 14;
+        let C = 14;
+        let N = 38;
+        let O = 8;
+        for (let index = 0; index < questions.length; index++){
+          if (questions[index].score == "+"){
+            if (questions[index].type == "E")
+              E += answers[index];
+            if (questions[index].type == "A")
+              A += answers[index];
+            if (questions[index].type == "C")
+              C += answers[index];
+            if (questions[index].type == "N")
+              N += answers[index];
+            if (questions[index].type == "O")
+              O += answers[index];
+          }
+          else{
+            if (questions[index].type == "E")
+              E -= answers[index];
+            if (questions[index].type == "A")
+              A -= answers[index];
+            if (questions[index].type == "C")
+              C -= answers[index];
+            if (questions[index].type == "N")
+              N -= answers[index];
+            if (questions[index].type == "O")
+              O -= answers[index];
+          }
+        }
+        updateQuiz(E, A, C, N, O);
         alert('Quiz Completed!');
       }
     } else {
