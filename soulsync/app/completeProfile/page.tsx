@@ -2,7 +2,7 @@
 
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { config } from 'dotenv';
-import { pushDataToDatabase } from '../../backend/handleSubmit';
+import { pushDataToDatabase } from '../../backend/index';
 import {router} from "next/client";
 
 config({ path: '../../.env' });
@@ -40,10 +40,10 @@ export default function useCompleteDetails() {
         });
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // Push data to database
-        pushDataToDatabase(formData);
+        await pushDataToDatabase(formData);
         // Send user to /personalityTest
         window.location.href = '/testIntro';
         console.log(formData);

@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth';
 import { auth } from '../../database/firebase';
-import { writeUserData, loggedID, setID } from '../../backend/index';
+import { writeUserData} from '../../backend/index';
+import { setID } from '../../backend/globals';
 
 export default function Register() {
   const[createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
@@ -38,7 +39,7 @@ export default function Register() {
           acceptTerms: false,
         });
         // set current user, and push email and password to db
-        await setID(formData.email);
+        setID(formData.email.replace("@", '%').replace(".", '%'));
         await writeUserData(formData.email, formData.password);
         //move the user to the complete profile page after registration
         window.location.href = '/completeProfile';
