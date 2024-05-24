@@ -5,7 +5,7 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import {useSignInWithEmailAndPassword} from 'react-firebase-hooks/auth';
 import { auth } from '../../database/firebase';
 import {useRouter} from "next/navigation";
-import {current_user} from "../../backend";
+import {loggedID, setID} from "../../backend";
 
 export default function Login() {
   const[signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
@@ -30,7 +30,7 @@ export default function Login() {
       const res = await signInWithEmailAndPassword(formData.email, formData.password);
       if(res === null || res ===undefined) throw new Error("Invalid email or password");
       //set current user
-      current_user.setID(formData.email);
+      await setID(formData.email);
       //start a user session
       setIsUserLoggedIn(true);
       router.push("/")

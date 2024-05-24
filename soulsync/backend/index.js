@@ -1,19 +1,20 @@
 import {ref, set} from "firebase/database";
 import {database} from "../database/firebase.js";
-import user from "./user.js";
 
-let current_user = user;
+export let loggedID
+export async function setID(data){
+    data = data.replace("@", "%")
+    loggedID = data.replace(".", "%")
+}
 
 // modified to only create user with email and pass and give quiz results default values
-export function writeUserData(email, password) {
-    let ID = email.replace("@", "%")
-    ID = ID.replace(".", "%")
-    let reference = ref(database, 'users/' + ID)
+export async function writeUserData(email, password) {
+    let reference = ref(database, 'users/' + loggedID)
     set(reference, {
         email: email,
         password: password,
     })
-    reference = ref(database, 'profiles/' + ID)
+    reference = ref(database, 'profiles/' + loggedID)
     set(reference, {
         E: 20,
         A: 14,
@@ -24,8 +25,8 @@ export function writeUserData(email, password) {
 }
 
 // updates quiz results, uses current user
-export function updateQuiz(E, A, C, N, O) {
-    const reference = ref(database, 'profiles/' + current_user.id)
+export async function updateQuiz(E, A, C, N, O) {
+    const reference = ref(database, 'profiles/' + loggedID)
     set(reference, {
         E: E,
         A: A,
@@ -43,5 +44,3 @@ export function matchUsers(user0, user1) {
     const O = Math.abs(user0.O - user1.O) * 2.5
     return 100-((E*20/100)+(A*20/100)+(C*20/100)+(N*20/100)+(O*20/100))
 }
-
-export { current_user };
