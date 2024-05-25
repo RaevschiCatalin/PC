@@ -90,6 +90,7 @@ const PersonalityTest: React.FC = () => {
         updateQuiz(E, A, C, N, O);
         console.log(E, A, C, N, O);
         alert('Quiz Completed!');
+        window.location.href = '/match';
       }
     } else {
       alert('Please select an answer before proceeding.');

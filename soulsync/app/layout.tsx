@@ -4,6 +4,7 @@ import "./globals.css";
 // import Head from "next/head";
 import Footer from "../components/Footer";
 import Nav from "../components/Nav";
+import {AuthProvider} from "../components/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,12 +21,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-
     <body className={inter.className}>
+
     <div className='gradient'></div>
     <main>
         <Nav/>
+
         {children}
+
         <Footer/>
     </main>
     </body>

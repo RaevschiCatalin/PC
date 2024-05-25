@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export default function TestIntro() {
     return(
-        <div className="flex flex-col items-center min-h-screen mt-20 px-10">
-            <h1 className="text-center text-5xl mb-10">
+        <div className="flex flex-col gap-6 justify-center align-middle  items-center min-h-screen mt-0 px-10">
+            <h1 className="text-center font-bold font-inter text-5xl mb-10">
                 Almost there! Just a few more questions to go.
             </h1>
             <p className="text-center text-2xl mb-4">
@@ -14,7 +14,9 @@ export default function TestIntro() {
             </p>
             <button className="black_btn z-50">
                 <Link href={'/personalityTest'} className="text-3xl">
+                    <h1 className="text-3xl font-bold">
                     Start Test
+                    </h1>
                 </Link>
             </button>
         </div>
