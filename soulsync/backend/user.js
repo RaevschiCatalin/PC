@@ -1,6 +1,4 @@
 export default class User {
-    //am adaugat static pentru ca nu lucra altfel
-    static id;
 
     constructor(id, email, password, E, A, C, N, O) {
         this.id = id;
@@ -13,15 +11,4 @@ export default class User {
         this.O = O;
     }
 
-    setID (id) {
-        id = id.replace("@", "%")
-        id = id.replace(".", "%")
-        this.id = id;
-    }
-    //am adaugat static pentru ca nu lucra altfel
-    static setID (id) {
-        id = id.replace("@", "%")
-        id = id.replace(".", "%")
-        return id;
-    }
 }
