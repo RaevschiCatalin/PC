@@ -75,6 +75,7 @@ const PersonalityTest: React.FC = () => {
           }
         }
         updateQuiz(E, A, C, N, O);
+        console.log(E, A, C, N, O);
         alert('Quiz Completed!');
       }
     } else {
