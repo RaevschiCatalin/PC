@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function TestIntro() {
     return(
-        <div className="flex flex-col gap-6 justify-center align-middle  items-center min-h-screen mt-0 px-10">
+        <div className="flex flex-col gap-6 justify-center align-middle items-center min-h-screen mt-0 px-20">
             <h1 className="text-center font-bold font-inter text-5xl mb-10">
                 Almost there! Just a few more questions to go.
             </h1>
@@ -19,6 +19,12 @@ export default function TestIntro() {
                     </h1>
                 </Link>
             </button>
+            <p className="text-sm">
+                Already know your personality type?  
+                <Link href={'/selectPersonality'} className="pl-1 hover:underline">
+                    Click here to skip the test.
+                </Link>
+            </p>
         </div>
     );
 }

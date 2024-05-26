@@ -20,11 +20,11 @@ export default function Profile() {
         <div className="min-h-screen bg-white text-black">
             <div className="max-w-4xl mx-auto p-6">
                 <div className="flex items-center justify-center mb-10">
-                    <h1 className="text-5xl font-bold">Welcome, John Doe!</h1>
+                    <h1 className="text-5xl font-bold">Welcome, <a className='text-rose-500'>John Doe</a>!</h1>
                 </div>
 
                 <div className="mb-6">
-                    <h1 className="text-3xl font-bold">Personality type: <a className='font-normal'>ENTP</a></h1>
+                    <h1 className="text-3xl font-bold">Personality type: <a className='font-normal text-purple-600'>ENTP</a></h1>
                 </div>
 
                 <div className="mb-6">
