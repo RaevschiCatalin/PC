@@ -1,4 +1,4 @@
-import { ref, set, push, update } from "firebase/database";
+import { ref, set, push, update, get } from "firebase/database";
 import { database } from "../database/firebase.js";
 import { getID, setID } from "./globals.js";
 
@@ -58,6 +58,19 @@ export function matchUsers(user0, user1) {
     const N = Math.abs(user0.N - user1.N) * 2.5;
     const O = Math.abs(user0.O - user1.O) * 2.5;
     return 100 - ((E * 20 / 100) + (A * 20 / 100) + (C * 20 / 100) + (N * 20 / 100) + (O * 20 / 100));
+}
+
+//checks for duplicate email, returns false if duplicate, true if not
+export async function validateEmail(email){
+    const usersRef = ref(database, 'users/');
+    const snapshot = await get(usersRef);
+    const data = snapshot.val()
+    for (let user in data){
+        if (data[user].email === email){
+            return false;
+        }
+    }
+    return true;
 }
 
 export { pushDataToDatabase };
