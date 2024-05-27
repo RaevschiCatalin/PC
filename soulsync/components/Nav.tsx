@@ -6,6 +6,7 @@ import { signOut } from "firebase/auth";
 import { Navbar, Button } from "flowbite-react";
 import { auth } from '../database/firebase';
 import { onAuthStateChanged } from "firebase/auth";
+import logo from 'public/assets/icons/logo1.svg'
 
 export default function Nav() {
     const [isUserLoggedIn, setIsLogged] = useState(false);
@@ -24,7 +25,7 @@ export default function Nav() {
     return (
         <Navbar fluid rounded>
             <Navbar.Brand as={Link} href="/" >
-                <img src="/assets/icons/logo.svg" className="mr-3 h-8 sm:h-9" alt="Logo" />
+                <Image src={logo} className="mr-3 h-8 sm:h-9" alt="Logo" width={50} height={50} />
                 <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white gap-1"><span className="logo_gradinet">Soul</span>Sync</span>
             </Navbar.Brand>
             <Navbar.Toggle />
