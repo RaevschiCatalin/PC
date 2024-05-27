@@ -11,13 +11,13 @@ export default function FooterWithLogo() {
                         <Footer.Link href="/about">
                             About
                         </Footer.Link>
-                        <Footer.Link href="/">
+                        <Footer.Link href="/terms">
                             Privacy Policy
                         </Footer.Link>
-                        <Footer.Link href="/">
+                        <Footer.Link href="/terms">
                             Licensing
                         </Footer.Link>
-                        <Footer.Link href="/">
+                        <Footer.Link href="/contact">
                             Contact
                         </Footer.Link>
                     </Footer.LinkGroup>

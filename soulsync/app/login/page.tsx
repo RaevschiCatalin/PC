@@ -5,6 +5,8 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import {useSignInWithEmailAndPassword} from 'react-firebase-hooks/auth';
 import { auth } from '../../database/firebase';
 import {useRouter} from "next/navigation";
+import Image from "next/image";
+import svgIcon from '../../public/assets/icons/logo1.svg'
 
 export default function Login() {
   const[signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
@@ -39,11 +41,19 @@ export default function Login() {
 
   return (
     <div className="flex justify-center items-center h-screen pb-10">
-      <div className="w-full max-w-md">
-        <h1 className="text-2xl mb-4 text-center">Login</h1>
+      <div className="w-full max-w-md text-center">
+        <div className="flex justify-center mb-12">
+          <Image
+              src={svgIcon}
+              alt="My SVG"
+              width={120}
+              height={120}
+          />
+        </div>
+        <h1 className="text-3xl mb-4 font-bold text-center">Login</h1>
         <form onSubmit={handleSubmit} className="space-y-4 border rounded-2xl border-black border-solid p-6 bg-white">
           <div>
-            <label className="block mb-1">Email:</label>
+          <label className="block mb-1">Email:</label>
             <input
               type="email"
               name="email"

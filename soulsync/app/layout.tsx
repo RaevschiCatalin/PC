@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-// import Head from "next/head";
 import Footer from "../components/Footer";
 import Nav from "../components/Nav";
 
@@ -25,9 +24,7 @@ export default function RootLayout({
     <div className='gradient'></div>
     <main>
         <Nav/>
-
         {children}
-
         <Footer/>
     </main>
     </body>

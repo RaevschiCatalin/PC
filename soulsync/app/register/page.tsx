@@ -6,6 +6,8 @@ import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth';
 import { auth } from '../../database/firebase';
 import { writeUserData} from '../../backend/index';
 import { setID } from '../../backend/globals';
+import Image from "next/image";
+import svgIcon from '../../public/assets/icons/logo1.svg'
 
 export default function Register() {
   const[createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
@@ -55,54 +57,66 @@ export default function Register() {
   return (
     <div className="flex justify-center items-center h-screen pb-10">
       <div className="w-full max-w-md">
-        <h1 className="text-2xl mb-4 text-center">Register</h1>
+        <div className="flex justify-center mb-12">
+          <Image
+              src={svgIcon}
+              alt="My SVG"
+              width={120}
+              height={120}
+          />
+        </div>
+        <h1 className="text-3xl font-bold mb-4 text-center">Register</h1>
         <form onSubmit={handleSubmit} className="space-y-4 border rounded-2xl border-black border-solid p-6 bg-white">
           <div>
             <label className="block mb-1">Email:</label>
             <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-              required
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                required
             />
           </div>
           <div>
             <label className="block mb-1">Password:</label>
             <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-              required
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                required
             />
           </div>
           <div>
             <label className="block mb-1">Repeat Password:</label>
             <input
-              type="password"
-              name="repeatPassword"
-              value={formData.repeatPassword}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-              required
+                type="password"
+                name="repeatPassword"
+                value={formData.repeatPassword}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                required
             />
           </div>
           <div className="flex items-center">
             <input
-              type="checkbox"
-              name="acceptTerms"
-              checked={formData.acceptTerms}
-              onChange={handleChange}
-              className="mr-2"
+                type="checkbox"
+                name="acceptTerms"
+                checked={formData.acceptTerms}
+                onChange={handleChange}
+                className="mr-2"
             />
-            <label className="text-sm">I accept the terms and conditions</label>
+            <label className="text-sm">I accept the <span className='text-blue-500'><Link href='/terms'>terms and conditions</Link></span> </label>
           </div>
-          <button type="submit" className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Register</button>
+          <button type="submit"
+                  className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Register
+          </button>
           <div className="text-center mt-2">
-            <p className="text-sm">Already have an account? <Link href="/login" className="text-blue-500 hover:underline">Login here</Link></p>
+            <p className="text-sm">Already have an account? <Link href="/login"
+                                                                  className="text-blue-500 hover:underline">Login
+              here</Link></p>
           </div>
         </form>
       </div>
