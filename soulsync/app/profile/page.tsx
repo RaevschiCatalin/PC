@@ -81,6 +81,7 @@ export default function Profile() {
 
                 <div className="mb-6">
                     <h1 className="text-3xl font-bold">Age: <span className='font-normal text-purple-600'>{calculateAge(userData.dob).toString()}</span></h1>
+
                 </div>
 
                 <div className="mb-6">
@@ -113,7 +114,7 @@ export default function Profile() {
                     </p>
                 </div>
 
-                <div className="text-center mt-8">
+                <div className="text-center text-xl mt-8">
                     <button className="px-6 py-3 bg-black text-white rounded-full border border-black transition-all hover:bg-white hover:text-black text-center text-md font-inter">
                         <Link href={"/match"}>
                             Back to matching
