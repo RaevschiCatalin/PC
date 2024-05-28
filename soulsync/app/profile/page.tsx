@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { fetchUserData } from '../../backend/index';
+import getProfileId, { fetchUserData } from '../../backend/index';
 
 export default function Profile() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,7 +22,7 @@ export default function Profile() {
     const [tempDescription, setTempDescription] = useState('');
 
     const auth = getAuth();
-
+    const profileId = getProfileId();
     useEffect(() => {
         console.log('Fetching user data...');
         console.log(userData);

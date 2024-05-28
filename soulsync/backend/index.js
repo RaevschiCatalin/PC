@@ -10,14 +10,45 @@ const firestore = getFirestore();
 export function getCurrentUser() {
     return auth.currentUser;
 }
+export default async function getProfileId(){
+    const user = getCurrentUser();
+    if (!user) {
+        console.error("No user authenticated.");
+        return;
+    }
 
+    try {
+        // Get the user's record from the database
+        const userRef = ref(database, `users/${user.uid}`);
+        const userSnapshot = await get(userRef);
+        const userData = userSnapshot.val();
+
+        if (!userData || !userData.profileId) {
+            console.error("User profile not found.");
+            return;
+        }
+
+        // Get the profile ID from the user's record
+        const profileId = userData.profileId;
+        console.log("Profile ID: ", profileId);
+        return profileId;
+    } catch (e){
+        console.error("Error getting profile ID: ", e);
+        return;
+    }
+}
 export async function writeUserData(email, password) {
-    const usersRef = ref(database, 'users');
-    const newUserRef = push(usersRef);
+    const user = getCurrentUser();
+    if (!user) {
+        console.error("No user authenticated.");
+        return;
+    }
 
-    await set(newUserRef, {
+    const usersRef = ref(database, 'users/' + user.uid);
+    await set(usersRef, {
         email: email,
         password: password,
+        profileId: '',
     });
 }
 
@@ -27,7 +58,6 @@ export async function pushDataToDatabase(data) {
         console.error("No user authenticated.");
         return;
     }
-
     try {
         setID(user.uid);
         const profilesRef = ref(database, 'profiles');
@@ -44,6 +74,12 @@ export async function pushDataToDatabase(data) {
             N: 0,
             O: 0
         });
+
+        const profileId = newProfileRef.key;
+        const userRef = ref(database, 'users/' + user.uid);
+        await update(userRef, {
+            profileId: profileId
+        });
     } catch (error) {
         console.error(error);
     }
@@ -56,36 +92,36 @@ export async function updateQuiz(E, A, C, N, O) {
         return;
     }
 
-    const reference = ref(database, 'profiles/' + user.uid);
     try {
-        // Retrieve the existing document
-        const snapshot = await get(reference);
-        if (snapshot.exists()) {
-            const existingData = snapshot.val();
+        // Get the user's record from the database
+        const userRef = ref(database, `users/${user.uid}`);
+        const userSnapshot = await get(userRef);
+        const userData = userSnapshot.val();
 
-            // Update the necessary fields
-            const updatedData = {
-                ...existingData,
-                E: E,
-                A: A,
-                C: C,
-                N: N,
-                O: O
-            };
-
-            // Update the document with the modified data
-            await set(reference, updatedData);
-            console.log(user.uid);
-            console.log("Profile updated successfully.");
-        } else {
-            console.error("Document does not exist.");
+        if (!userData || !userData.profileId) {
+            console.error("User profile not found.");
+            return;
         }
+
+        // Get the profile ID from the user's record
+        const profileId = userData.profileId;
+        console.log("Profile ID: ", profileId);
+
+        // Update the corresponding profile with the new values
+        const profileRef = ref(database, `profiles/${profileId}`);
+        await update(profileRef, {
+            E: E,
+            A: A,
+            C: C,
+            N: N,
+            O: O
+        });
+
+        console.log("Profile updated successfully.");
     } catch (error) {
         console.error("Error updating profile:", error);
     }
 }
-
-
 
 export function matchUsers(user0, user1) {
     const E = Math.abs(user0.E - user1.E) * 2.5;
@@ -122,17 +158,18 @@ export async function validateEmail(email) {
 }
 
 export async function fetchUserData() {
-    const user = getCurrentUser();
-    if (!user) {
-        console.error("No user authenticated.");
+    const profileId = await getProfileId();
+    if (!profileId) {
+        console.error("No profile ID found.");
         return null;
     }
 
     try {
-        const userDoc = doc(firestore, 'profiles', user.uid);
-        const userSnapshot = await getDoc(userDoc);
-        if (userSnapshot.exists()) {
-            const data = userSnapshot.data();
+        const profileRef = ref(database, `profiles/${profileId}`);
+        const profileSnapshot = await get(profileRef);
+        const data = profileSnapshot.val();
+
+        if (data) {
             return {
                 name: data.name || '',
                 dob: data.dob || '',
@@ -145,7 +182,7 @@ export async function fetchUserData() {
                 O: data.O || 0,
             };
         } else {
-            console.log('No such document!');
+            console.log('No such profile!');
             return null;
         }
     } catch (error) {
@@ -153,5 +190,3 @@ export async function fetchUserData() {
         return null;
     }
 }
-
-

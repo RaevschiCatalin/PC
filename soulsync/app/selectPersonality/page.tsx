@@ -5,7 +5,6 @@ import {updateQuiz} from "../../backend";
 
 export default function SelectPersonality() {
     const [selectedType, setSelectedType] = useState('');
-
     const personalityTypes = [
         "INTJ", "INTP", "ENTJ", "ENTP",
         "INFJ", "INFP", "ENFJ", "ENFP",
@@ -18,7 +17,6 @@ export default function SelectPersonality() {
     };
 
     const handleSubmit = () => {
-        // Here, you might handle the form submission, such as navigating to another page or storing the selection
         alert(`Personality Type ${selectedType} selected!`);
         updateQuiz(23,32,12,45,7);
     };
@@ -52,11 +50,11 @@ export default function SelectPersonality() {
                     }`}
                     disabled={!selectedType}
                 >
-                    <Link href={'/match'}>
+                    {/*<Link href={'/match'}>*/}
                         <h1 className="text-xl font-bold">
                             Continue
                         </h1>
-                    </Link>
+                    {/*</Link>*/}
                 </button>
             </form>
         </div>
