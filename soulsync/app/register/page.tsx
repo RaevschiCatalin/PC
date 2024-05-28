@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth';
 import { auth } from '../../database/firebase';
-import { writeUserData} from '../../backend/index';
+import {validateEmail, writeUserData} from '../../backend/index';
 import { setID } from '../../backend/globals';
 import Image from "next/image";
 import svgIcon from '../../public/assets/icons/logo1.svg'
@@ -28,30 +28,43 @@ export default function Register() {
 
   const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Validate email first
+    const emailValid = await validateEmail(formData.email);
+    console.log("Email validation result: ", emailValid);
+    if (!emailValid) {
+      alert('Please enter a unique email address.');
+      return;
+    }
+
+    // Check if passwords match
     if (formData.password === formData.repeatPassword) {
       try {
         const res = await createUserWithEmailAndPassword(formData.email, formData.password);
         console.log(res);
 
-        //set email password and repeat password to empty string
+        // Set email, password, and repeat password to empty strings
         setFormData({
           email: '',
           password: '',
           repeatPassword: '',
           acceptTerms: false,
         });
-        // set current user, and push email and password to db
+
+        // Set current user ID, and push email and password to DB
         setID(formData.email.replace("@", '%').replace(".", '%'));
         await writeUserData(formData.email, formData.password);
-        //move the user to the complete profile page after registration
+
+        // Move the user to the complete profile page after registration
         window.location.href = '/completeProfile';
 
       } catch (message) {
-      console.error(message);
-      alert(message);
+        console.error(message);
+        alert(message);
+      }
+    } else {
+      alert('Passwords do not match.');
     }
-
-  }
   };
 
   return (

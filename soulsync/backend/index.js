@@ -61,16 +61,30 @@ export function matchUsers(user0, user1) {
 }
 
 //checks for duplicate email, returns false if duplicate, true if not
-export async function validateEmail(email){
+export async function validateEmail(email) {
     const usersRef = ref(database, 'users/');
-    const snapshot = await get(usersRef);
-    const data = snapshot.val()
-    for (let user in data){
-        if (data[user].email === email){
-            return false;
+    try {
+        const snapshot = await get(usersRef);
+        const data = snapshot.val();
+
+        if (!data) {
+            console.log("No users in the database.");
+            return true;
         }
+
+        for (let user in data) {
+            if (data[user].email === email) {
+                console.log("Duplicate email found: ", email);
+                return false;
+            }
+        }
+        console.log("Email is unique: ", email);
+        return true;
+    } catch (error) {
+        console.error("Error checking email uniqueness: ", error);
+        return false;
     }
-    return true;
 }
+
 
 export { pushDataToDatabase };
