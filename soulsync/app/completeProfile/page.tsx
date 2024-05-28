@@ -4,6 +4,7 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import { config } from 'dotenv';
 import { pushDataToDatabase } from '../../backend/index';
 import {router} from "next/client";
+import {useRouter} from "next/navigation";
 
 config({ path: '../../.env' });
 
@@ -14,6 +15,7 @@ export default function useCompleteDetails() {
         city: '',
         description: '',
     });
+    const router = useRouter();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -45,7 +47,7 @@ export default function useCompleteDetails() {
         // Push data to database
         await pushDataToDatabase(formData);
         // Send user to /personalityTest
-        window.location.href = '/testIntro';
+        router.push('/testIntro');
         console.log(formData);
     };
 

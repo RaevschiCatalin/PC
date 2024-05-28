@@ -1,26 +1,66 @@
 import { ref, set, push, update, get } from "firebase/database";
 import { database } from "../database/firebase.js";
 import { getID, setID } from "./globals.js";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 
+const auth = getAuth();
+const firestore = getFirestore();
+
+export function getCurrentUser() {
+    return auth.currentUser;
+}
+export default async function getProfileId(){
+    const user = getCurrentUser();
+    if (!user) {
+        console.error("No user authenticated.");
+        return;
+    }
+
+    try {
+        // Get the user's record from the database
+        const userRef = ref(database, `users/${user.uid}`);
+        const userSnapshot = await get(userRef);
+        const userData = userSnapshot.val();
+
+        if (!userData || !userData.profileId) {
+            console.error("User profile not found.");
+            return;
+        }
+
+        // Get the profile ID from the user's record
+        const profileId = userData.profileId;
+        console.log("Profile ID: ", profileId);
+        return profileId;
+    } catch (e){
+        console.error("Error getting profile ID: ", e);
+        return;
+    }
+}
 export async function writeUserData(email, password) {
-    // Create a reference to the 'users' collection
-    const usersRef = ref(database, 'users');
-    // Generate a new unique key for the new user
-    const newUserRef = push(usersRef);
+    const user = getCurrentUser();
+    if (!user) {
+        console.error("No user authenticated.");
+        return;
+    }
 
-    await set(newUserRef, {
+    const usersRef = ref(database, 'users/' + user.uid);
+    await set(usersRef, {
         email: email,
         password: password,
+        profileId: '',
     });
 }
 
-const pushDataToDatabase = async (data) => {
+export async function pushDataToDatabase(data) {
+    const user = getCurrentUser();
+    if (!user) {
+        console.error("No user authenticated.");
+        return;
+    }
     try {
-        // Set a placeholder ID (update this logic as needed)
-        setID("placeholder%gmail%com");
-        // Create a reference to the 'profiles' collection
+        setID(user.uid);
         const profilesRef = ref(database, 'profiles');
-        // Generate a new unique key for the new profile
         const newProfileRef = push(profilesRef);
 
         await set(newProfileRef, {
@@ -34,21 +74,53 @@ const pushDataToDatabase = async (data) => {
             N: 0,
             O: 0
         });
+
+        const profileId = newProfileRef.key;
+        const userRef = ref(database, 'users/' + user.uid);
+        await update(userRef, {
+            profileId: profileId
+        });
     } catch (error) {
         console.error(error);
     }
 }
 
 export async function updateQuiz(E, A, C, N, O) {
-    setID("placeholder%gmail%com");
-    const reference = ref(database, 'profiles/' + getID());
-    await update(reference, {
-        E: E,
-        A: A,
-        C: C,
-        N: N,
-        O: O
-    });
+    const user = getCurrentUser();
+    if (!user) {
+        console.error("No user authenticated.");
+        return;
+    }
+
+    try {
+        // Get the user's record from the database
+        const userRef = ref(database, `users/${user.uid}`);
+        const userSnapshot = await get(userRef);
+        const userData = userSnapshot.val();
+
+        if (!userData || !userData.profileId) {
+            console.error("User profile not found.");
+            return;
+        }
+
+        // Get the profile ID from the user's record
+        const profileId = userData.profileId;
+        console.log("Profile ID: ", profileId);
+
+        // Update the corresponding profile with the new values
+        const profileRef = ref(database, `profiles/${profileId}`);
+        await update(profileRef, {
+            E: E,
+            A: A,
+            C: C,
+            N: N,
+            O: O
+        });
+
+        console.log("Profile updated successfully.");
+    } catch (error) {
+        console.error("Error updating profile:", error);
+    }
 }
 
 export function matchUsers(user0, user1) {
@@ -60,7 +132,6 @@ export function matchUsers(user0, user1) {
     return 100 - ((E * 20 / 100) + (A * 20 / 100) + (C * 20 / 100) + (N * 20 / 100) + (O * 20 / 100));
 }
 
-//checks for duplicate email, returns false if duplicate, true if not
 export async function validateEmail(email) {
     const usersRef = ref(database, 'users/');
     try {
@@ -86,5 +157,36 @@ export async function validateEmail(email) {
     }
 }
 
+export async function fetchUserData() {
+    const profileId = await getProfileId();
+    if (!profileId) {
+        console.error("No profile ID found.");
+        return null;
+    }
 
-export { pushDataToDatabase };
+    try {
+        const profileRef = ref(database, `profiles/${profileId}`);
+        const profileSnapshot = await get(profileRef);
+        const data = profileSnapshot.val();
+
+        if (data) {
+            return {
+                name: data.name || '',
+                dob: data.dob || '',
+                city: data.city || '',
+                description: data.description || '',
+                E: data.E || 0,
+                A: data.A || 0,
+                C: data.C || 0,
+                N: data.N || 0,
+                O: data.O || 0,
+            };
+        } else {
+            console.log('No such profile!');
+            return null;
+        }
+    } catch (error) {
+        console.error("Error fetching user data: ", error);
+        return null;
+    }
+}

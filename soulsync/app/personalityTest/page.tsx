@@ -3,13 +3,15 @@
 import React, { useState, useEffect } from 'react';
 import { Question } from '../../types/question';
 import {updateQuiz} from "../../backend";
+import {router} from "next/client";
+import {useRouter} from "next/navigation";
 
 const PersonalityTest: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [loading, setLoading] = useState(true);
-
+  const router = useRouter();
   useEffect(() => {
     // Fetch questions from the API route
     fetch('/api/questions')
@@ -90,7 +92,8 @@ const PersonalityTest: React.FC = () => {
         updateQuiz(E, A, C, N, O);
         console.log(E, A, C, N, O);
         alert('Quiz Completed!');
-        window.location.href = '/testReport';
+
+        router.push('/profile');
       }
     } else {
       alert('Please select an answer before proceeding.');
