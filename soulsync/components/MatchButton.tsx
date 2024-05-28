@@ -3,6 +3,7 @@ import { auth } from "../database/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import getCurrentUser from "../backend";
 
 
 function DisplayLogButton() {
@@ -16,6 +17,7 @@ function DisplayLogButton() {
             }
         });
     });
+
     return (
         <div>
             {isUserLoggedIn ? (

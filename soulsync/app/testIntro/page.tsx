@@ -21,7 +21,7 @@ export default function TestIntro() {
             </button>
             <p className="text-sm">
                 Already know your personality type?  
-                <Link href={'/selectPersonality'} className="pl-1 hover:underline">
+                <Link href={'/selectPersonality'} className="pl-1 hover:underline text-blue-500">
                     Click here to skip the test.
                 </Link>
             </p>

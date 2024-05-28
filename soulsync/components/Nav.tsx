@@ -21,6 +21,7 @@ export default function Nav() {
     const handleSignOut = () => {
         signOut(auth)
             .catch(err => alert(err))
+        window.location.href = '/';
     }
     return (
         <Navbar fluid rounded>
