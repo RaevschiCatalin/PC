@@ -90,7 +90,7 @@ const PersonalityTest: React.FC = () => {
         updateQuiz(E, A, C, N, O);
         console.log(E, A, C, N, O);
         alert('Quiz Completed!');
-        window.location.href = '/match';
+        window.location.href = '/testReport';
       }
     } else {
       alert('Please select an answer before proceeding.');
@@ -108,7 +108,7 @@ const PersonalityTest: React.FC = () => {
   }
 
   return (
-      <div className="font-sans text-black flex flex-col items-center justify-center min-h-screen">
+      <div className="font-sans text-black flex flex-col items-center pt-36 pb-20 min-h-screen">
         {questions.length > 0 && (
             <>
               <p className="mb-8 text-purple-600 text-3xl md:text-4xl lg:text-5xl">{questions[questionIndex].question}</p>
@@ -123,7 +123,7 @@ const PersonalityTest: React.FC = () => {
                           value={option}
                           checked={selectedAnswer === option}
                           onChange={handleOptionChange}
-                          className="hover:bg-black h-8 w-8"
+                          className="hover:bg-rose-500 h-8 w-8"
                       />
                     </div>
                 ))}

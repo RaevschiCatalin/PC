@@ -33,7 +33,7 @@ export default function SelectPersonality() {
                 <select 
                     value={selectedType}
                     onChange={handleSelection}
-                    className="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
                     required
                 >
                     <option value="" disabled>Select your personality type</option>
