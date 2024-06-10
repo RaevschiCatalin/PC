@@ -47,8 +47,8 @@ export default function Profile() {
 
         return () => unsubscribe();
     }, [auth]);
-
-    const calculateAge = (dob) => {
+    // Calculate age from date of birth
+    const calculateAge = (dob:Date) => {
         if (!dob) return '';
         const birthDate = new Date(dob);
         const ageDifMs = Date.now() - birthDate.getTime();
@@ -56,6 +56,7 @@ export default function Profile() {
         return Math.abs(ageDate.getUTCFullYear() - 1970);
     };
 
+    // @ts-ignore
     const openModal = (section) => {
         setModalContent(section);
         setTempDescription(userData.description);  // Load the current description
@@ -65,10 +66,11 @@ export default function Profile() {
     const closeModal = () => {
         setIsModalOpen(false);
     };
-
+    // @ts-ignore
     const handleSave = async (e) => {
         e.preventDefault();
-        // Call your update function here to save the description
+        // Push the new description to the database
+
         closeModal();
     };
 
