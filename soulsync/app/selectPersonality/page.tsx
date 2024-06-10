@@ -2,8 +2,10 @@
 import Link from "next/link";
 import { useState, ChangeEvent } from 'react';
 import {updateQuiz} from "../../backend";
+import {useRouter} from "next/navigation";
 
 export default function SelectPersonality() {
+    const router = useRouter();
     const [selectedType, setSelectedType] = useState('');
     const personalityTypes = [
         "INTJ", "INTP", "ENTJ", "ENTP",
@@ -17,8 +19,9 @@ export default function SelectPersonality() {
     };
 
     const handleSubmit = () => {
-        alert(`Personality Type ${selectedType} selected!`);
+        //de facut o functie care baga parametrii in functie de personalitatea selectata
         updateQuiz(23,32,12,45,7);
+        router.push('/match');
     };
 
     return (

@@ -44,11 +44,11 @@ export default function Register() {
         if (!res) throw new Error('Failed to create user');
 
         // User session is automatically handled by Firebase
-        setID(formData.email.replace("@", '%').replace(".", '%'));
-        await writeUserData(formData.email, formData.password);
+        // setID(formData.email.replace("@", '%').replace(".", '%'));
+        // await writeUserData(formData.email, formData.password);
 
         // Redirect user to complete profile page
-        router.push('/completeProfile');
+        router.push('/verifyEmail');
       } catch (message) {
         console.error(message);
         alert(message);

@@ -5,6 +5,8 @@ import { config } from 'dotenv';
 import { pushDataToDatabase } from '../../backend/index';
 import {router} from "next/client";
 import {useRouter} from "next/navigation";
+import useRequireAuth from "../../components/useRequireAuth";
+
 
 config({ path: '../../.env' });
 
@@ -16,7 +18,7 @@ export default function useCompleteDetails() {
         description: '',
     });
     const router = useRouter();
-
+    const { user, loading, error } = useRequireAuth();
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         const maxLength = 256;
