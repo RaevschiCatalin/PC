@@ -48,7 +48,8 @@ export default function Profile() {
         return () => unsubscribe();
     }, [auth]);
     // Calculate age from date of birth
-    const calculateAge = (dob:Date) => {
+    // @ts-ignore
+    const calculateAge = (dob) => {
         if (!dob) return '';
         const birthDate = new Date(dob);
         const ageDifMs = Date.now() - birthDate.getTime();
