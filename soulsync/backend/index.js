@@ -132,6 +132,49 @@ export function matchUsers(user0, user1) {
     return 100 - ((E * 20 / 100) + (A * 20 / 100) + (C * 20 / 100) + (N * 20 / 100) + (O * 20 / 100));
 }
 
+export function personalityType (user){
+    let results ={
+        E, A, C, N, O
+    }
+
+    if (user.E <= 15)
+        results.E = "-"
+    else if (user.E > 15 && user.E < 25)
+        results.E = "="
+    else
+        results.E = "+"
+
+    if (user.A <= 15)
+        results.A = "-"
+    else if (user.A > 15 && user.A < 25)
+        results.A = "="
+    else
+        results.A = "+"
+
+    if (user.C <= 15)
+        results.C = "-"
+    else if (user.C > 15 && user.C < 25)
+        results.C = "="
+    else
+        results.C = "+"
+
+    if (user.N <= 15)
+        results.N = "-"
+    else if (user.N > 15 && user.E < 25)
+        results.N = "="
+    else
+        results.N = "+"
+
+    if (user.O <= 15)
+        results.O = "-"
+    else if (user.O > 15 && user.O < 25)
+        results.O = "="
+    else
+        results.O = "+"
+
+    return results
+}
+
 export async function validateEmail(email) {
     const usersRef = ref(database, 'users/');
     try {

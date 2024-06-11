@@ -1,0 +1,79 @@
+{
+  "allTypes": [
+    {
+      "type": "E",
+      "score": "-",
+      "desc": "Introvert, you'd rather spend time alone."
+    },
+    {
+      "type": "E",
+      "score": "=",
+      "desc": "Average, no faults or advantages."
+    },
+    {
+      "type": "E",
+      "score": "+",
+      "desc": "Extrovert, you're better with people."
+    },
+    {
+      "type": "A",
+      "score": "-",
+      "desc": "Competitive, you like to assert yourself."
+    },
+    {
+      "type": "A",
+      "score": "=",
+      "desc": "Average, no faults or advantages."
+    },
+    {
+      "type": "A",
+      "score": "+",
+      "desc": "Agreeable, you'd rather get along with everyone."
+    },
+    {
+      "type": "C",
+      "score": "-",
+      "desc": "Spontaneous, you enjoy adventure."
+    },
+    {
+      "type": "C",
+      "score": "=",
+      "desc": "Average, no faults or advantages."
+    },
+    {
+      "type": "C",
+      "score": "+",
+      "desc": "Conscientious, you like to have more structure."
+    },
+    {
+      "type": "N",
+      "score": "-",
+      "desc": "Reactive, you don't like containing your emotions."
+    },
+    {
+      "type": "N",
+      "score": "=",
+      "desc": "Average, no faults or advantages."
+    },
+    {
+      "type": "N",
+      "score": "+",
+      "desc": "Stable, you don't let the world affect you."
+    },
+    {
+      "type": "O",
+      "score": "-",
+      "desc": "Consistent, you like to have a structured life."
+    },
+    {
+      "type": "O",
+      "score": "=",
+      "desc": "Average, no faults or advantages."
+    },
+    {
+      "type": "O",
+      "score": "+",
+      "desc": "Open, everyday is something new for you."
+    }
+  ]
+}

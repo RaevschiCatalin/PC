@@ -8,3 +8,8 @@ Openness to Experience (O) default 8
 
 intrebarile au specificat tipul (litera) si scor (+/-), ele au range de raspuns de la 1 la 5 ce reprezinta disagree... agree,
 aceste puncte se adauga la default values bazat pe tip si scor, cam asa functioneaza testul
+
+scorurile au range intre 0...40, inseamna ca average avem 20 pe scor
+0...15 -> low score sau "-"
+16...24 -> average score sau "="
+25...40 -> high score sau "+"
