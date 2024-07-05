@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import getProfileId, { fetchUserData } from '../../backend/index';
+import getProfileId, {fetchUserData, updateUserDescription} from '../../backend/index';
 
 export default function Profile() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,7 +71,7 @@ export default function Profile() {
     const handleSave = async (e) => {
         e.preventDefault();
         // Push the new description to the database
-
+        updateUserDescription(tempDescription);
         closeModal();
     };
 

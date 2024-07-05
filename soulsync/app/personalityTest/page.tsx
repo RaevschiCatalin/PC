@@ -93,7 +93,7 @@ const PersonalityTest: React.FC = () => {
         console.log(E, A, C, N, O);
         alert('Quiz Completed!');
 
-        router.push('/profile');
+        router.push('/testReport');
       }
     } else {
       alert('Please select an answer before proceeding.');
