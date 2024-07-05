@@ -3,6 +3,7 @@ import { database } from "../database/firebase.js";
 import { getID, setID } from "./globals.js";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
+import User from "./user.js";
 
 const auth = getAuth();
 const firestore = getFirestore();
@@ -139,15 +140,6 @@ export async function updateQuiz(E, A, C, N, O) {
     }
 }
 
-export function matchUsers(user0, user1) {
-    const E = Math.abs(user0.E - user1.E) * 2.5;
-    const A = Math.abs(user0.A - user1.A) * 2.5;
-    const C = Math.abs(user0.C - user1.C) * 2.5;
-    const N = Math.abs(user0.N - user1.N) * 2.5;
-    const O = Math.abs(user0.O - user1.O) * 2.5;
-    return 100 - ((E * 20 / 100) + (A * 20 / 100) + (C * 20 / 100) + (N * 20 / 100) + (O * 20 / 100));
-}
-
 export function personalityType (user){
     let results ={
         E, A, C, N, O
@@ -250,6 +242,7 @@ export async function fetchUserData() {
     }
 }
 
+
 export async function personalityDescription(){
     const pathToJSON = './personalityTypes.json';
     const profileId = await getProfileId();
@@ -331,3 +324,62 @@ function getDescriptions(userScores, allTypes) {
 }
 
 personalityDescription();
+
+export function matchUsers(user0, user1) {
+    const E = Math.abs(user0.E - user1.E) * 2.5;
+    const A = Math.abs(user0.A - user1.A) * 2.5;
+    const C = Math.abs(user0.C - user1.C) * 2.5;
+    const N = Math.abs(user0.N - user1.N) * 2.5;
+    const O = Math.abs(user0.O - user1.O) * 2.5;
+    return 100 - ((E * 20 / 100) + (A * 20 / 100) + (C * 20 / 100) + (N * 20 / 100) + (O * 20 / 100));
+}
+
+//functie ce returneaza o lista json cu toate datele relevante la userii cautati
+//minPercent -> procentul minim de match cautat
+//numberOfUsers -> numarul de useri cautati
+//currentUser -> utilizatorul curent (subject to change)
+export async function fetchUserList(minPercent, numberOfUsers, currentUser){
+    try {
+        let k = 0
+        let userList ={
+            users: []
+        }
+        const userRef = ref(database,'users/')
+        const userSnapshot = await get(userRef)
+        const userData = userSnapshot.val();
+        for (let data in userData) {
+            let profileRef = ref(database, 'profiles/' + userData[data].profileId)
+            let profileSnapshot = await get(profileRef);
+            let profileData = profileSnapshot.val();
+            let user = new User(userData[data].profileId, profileData.E, profileData.A, profileData.C, profileData.N, profileData.O,
+                profileData.city, profileData.description, profileData.dob, profileData.name)
+            if (matchUsers(currentUser, user) >= minPercent && k < numberOfUsers){
+                userList.users.push({
+                    "id": userData[data].profileId,
+                    "E": user.E,
+                    "A": user.A,
+                    "C": user.C,
+                    "N": user.N,
+                    "O": user.O,
+                    "city": user.city,
+                    "desc": user.desc,
+                    "dob": user.dob,
+                    "name": user.name
+                })
+                k += 1
+            }
+            else if (k == numberOfUsers)
+                break
+        }
+        return userList;
+    }
+    catch (error){
+        console.error("Error fetching user list:", error);
+    }
+}
+
+//testare functie noua
+//const currentUser = new User("placeholder", 32, 12, 23, 45, 7,
+//    "placeholder", "placeholder", "placeholder", "placeholder")
+//console.log(await fetchUserList(0,3, currentUser))
+
