@@ -243,8 +243,7 @@ export async function fetchUserData() {
 }
 
 
-export async function personalityDescription(){
-    const pathToJSON = './personalityTypes.json';
+export async function personalityDescription() {
     const profileId = await getProfileId();
     if (!profileId) {
         console.error("No profile ID found.");
@@ -257,31 +256,15 @@ export async function personalityDescription(){
         const data = profileSnapshot.val();
 
         if (data) {
-            console.log("User profile data:", data);
+            const userScores = {
+                E: data.E,
+                A: data.A,
+                C: data.C,
+                N: data.N,
+                O: data.O
+            };
 
-            const E = data.E;
-            const A = data.A;
-            const C = data.C;
-            const N = data.N;
-            const O = data.O;
-
-            const userScores = { E, A, C, N, O };
-            console.log("User scores:", userScores);
-
-            // Load the personality types JSON
-            const response = await fetch(pathToJSON);
-            if (!response.ok) {
-                console.error("Failed to fetch personality types JSON:", response.status, response.statusText);
-                return null;
-            }
-
-            const personalityData = await response.json();
-            console.log("Personality data loaded:", personalityData);
-
-            const descriptions = getDescriptions(userScores, personalityData.allTypes);
-            console.log("Descriptions:", descriptions);
-
-            return descriptions;
+            return getDescriptions(userScores, personalityData.allTypes);
         } else {
             console.log('No such profile!');
             return null;
@@ -294,7 +277,6 @@ export async function personalityDescription(){
 
 function getDescriptions(userScores, allTypes) {
     const descriptions = {};
-    console.log("All types:", allTypes);
 
     for (const type in userScores) {
         if (userScores.hasOwnProperty(type)) {
@@ -308,8 +290,6 @@ function getDescriptions(userScores, allTypes) {
             } else if (score >= 25 && score <= 40) {
                 scoreCategory = '+';
             }
-
-            console.log(`Type: ${type}, Score: ${score}, Score Category: ${scoreCategory}`);
 
             const typeDescriptions = allTypes.filter(item => item.type === type && item.score === scoreCategory);
             if (typeDescriptions.length > 0) {

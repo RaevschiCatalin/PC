@@ -1,8 +1,8 @@
 "use client";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import {personalityDescription} from "../../backend";
-
+import { personalityDescription } from "../../backend";
+import Loading from "../../components/Loading";
 
 export default function TestReport() {
     const [testResults, setTestResults] = useState(null);
@@ -17,13 +17,13 @@ export default function TestReport() {
     }, []);
 
     return (
-        <div className="flex flex-col gap-6 justify-center align-middle items-center min-h-screen mt-0 px-20">
-            <h1 className="text-4xl font-bold">
-                Here's a summary of your test results
+        <div className="flex flex-col gap-6 justify-center items-center min-h-screen mt-0 px-20">
+            <h1 className="text-4xl font-bold mb-4">
+                Here&apos;s a summary of your test results
             </h1>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 items-center">
                 {testResults ? (
-                    <div>
+                    <div className="text-center mb-4">
                         <p><strong>Extroversion:</strong> {testResults.E}</p>
                         <p><strong>Agreeableness:</strong> {testResults.A}</p>
                         <p><strong>Conscientiousness:</strong> {testResults.C}</p>
@@ -31,7 +31,9 @@ export default function TestReport() {
                         <p><strong>Openness to Experience:</strong> {testResults.O}</p>
                     </div>
                 ) : (
-                    <p>Loading...</p>
+                    <div className="mb-4">
+                        <Loading />
+                    </div>
                 )}
                 <button className="black_btn z-50">
                     <Link href={'/match'} className="text-3xl">
