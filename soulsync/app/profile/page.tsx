@@ -77,7 +77,7 @@ export default function Profile() {
 
     return (
         <div className="min-h-screen bg-white text-black">
-            <div className="max-w-4xl mx-auto p-6">
+            <div className="max-w-4xl mx-auto p-6 flex items-center justify-center mb-10 flex-col">
                 <div className="flex items-center justify-center mb-10">
                     <h1 className="text-5xl font-bold">Welcome, <span className='text-rose-500'>{userData.name}</span>!</h1>
                 </div>
@@ -91,14 +91,14 @@ export default function Profile() {
                     <h1 className="text-3xl font-bold">City: <span className='font-normal text-purple-600'>{userData.city}</span></h1>
                 </div>
 
-                <div className="mb-6">
-                    <h1 className="text-3xl font-bold">Personality Traits:</h1>
+                <div className="mb-6 flex items-center justify-center flex-col">
+                    <h1 className="text-3xl font-bold">Test Scores:</h1>
                     <ul className="list-disc list-inside space-y-2 mt-2">
-                        <li>E: {userData.E.toString()}</li>
-                        <li>A: {userData.A.toString()}</li>
-                        <li>C: {userData.C.toString()}</li>
-                        <li>N: {userData.N.toString()}</li>
-                        <li>O: {userData.O.toString()}</li>
+                        <li><b>Extroversion</b>: {userData.E.toString()} (Average Score is: 20)</li>
+                        <li><b>Agreeableness</b>: {userData.A.toString()} (Average Score is: 14)</li>
+                        <li><b>Conscientiousness</b>: {userData.C.toString()} (Average Score is: 14)</li>
+                        <li><b>Neuroticism</b>: {userData.N.toString()} (Average Score is: 38)</li>
+                        <li><b>Openness to Experience</b>: {userData.O.toString()} (Average Score is: 8)</li>
                     </ul>
                 </div>
 
@@ -116,7 +116,13 @@ export default function Profile() {
                         {userData.description}
                     </p>
                 </div>
-
+                <div className="text-center text-xl mt-8">
+                    <button className="px-6 py-3 bg-white text-black rounded-full border border-black transition-all hover:bg-black hover:text-white text-center text-md font-inter">
+                        <Link href={"/personalityTest"}>
+                            Redo Personality Test
+                        </Link>
+                    </button>
+                </div>
                 <div className="text-center text-xl mt-8">
                     <button className="px-6 py-3 bg-black text-white rounded-full border border-black transition-all hover:bg-white hover:text-black text-center text-md font-inter">
                         <Link href={"/match"}>
