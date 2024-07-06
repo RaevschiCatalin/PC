@@ -4,6 +4,8 @@ import { getID, setID } from "./globals.js";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import User from "./user.js";
+import path from 'path';
+import {personalityTypes} from './personalityTypes.json' assert { type: 'json' };
 
 const auth = getAuth();
 const firestore = getFirestore();
@@ -242,68 +244,65 @@ export async function fetchUserData() {
     }
 }
 
-
-export async function personalityDescription() {
+async function getTestScores(){
     const profileId = await getProfileId();
     if (!profileId) {
         console.error("No profile ID found.");
         return null;
     }
-
-    try {
+    try{
         const profileRef = ref(database, `profiles/${profileId}`);
         const profileSnapshot = await get(profileRef);
         const data = profileSnapshot.val();
-
-        if (data) {
-            const userScores = {
-                E: data.E,
-                A: data.A,
-                C: data.C,
-                N: data.N,
-                O: data.O
-            };
-
-            return getDescriptions(userScores, personalityData.allTypes);
-        } else {
-            console.log('No such profile!');
-            return null;
+        if(data){
+            return {
+                E: data.E || 0,
+                A: data.A || 0,
+                C: data.C || 0,
+                N: data.N || 0,
+                O: data.O || 0,
+            }
         }
-    } catch (error) {
-        console.error("Error fetching user data: ", error);
+    }catch (e){
+        console.error("Error fetching personality description: ", e);
         return null;
     }
 }
 
-function getDescriptions(userScores, allTypes) {
-    const descriptions = {};
-
-    for (const type in userScores) {
-        if (userScores.hasOwnProperty(type)) {
-            const score = userScores[type];
-            let scoreCategory = '';
-
-            if (score >= 0 && score <= 15) {
-                scoreCategory = '-';
-            } else if (score >= 16 && score <= 24) {
-                scoreCategory = '=';
-            } else if (score >= 25 && score <= 40) {
-                scoreCategory = '+';
-            }
-
-            const typeDescriptions = allTypes.filter(item => item.type === type && item.score === scoreCategory);
-            if (typeDescriptions.length > 0) {
-                descriptions[type] = typeDescriptions[0].desc;
-            } else {
-                console.warn(`No description found for type ${type} and score category ${scoreCategory}`);
-            }
-        }
+export async function getPersonalityResults() {
+    const scores = await getTestScores();
+    if (!scores) {
+        return null;
     }
 
-    return descriptions;
+    let results = {
+        E: "",
+        A: "",
+        C: "",
+        N: "",
+        O: ""
+    };
+
+    // Load the personality types from the JSON file
+    const { personalityTypes } = personalityTypes;
+
+    // Helper function to determine the category based on score
+    const getCategory = (score) => {
+        if (score < 16) return "-";
+        if (score >= 16 && score <= 24) return "=";
+        if (score > 24) return "+";
+    };
+
+    // Assign descriptions based on the score category
+    for (let type in results) {
+        let category = getCategory(scores[type]);
+        results[type] = personalityTypes[type][category].desc;
+    }
+    console.log(results);
+    return results;
 }
 
-personalityDescription();
+
 
 export function matchUsers(user0, user1) {
     const E = Math.abs(user0.E - user1.E) * 2.5;

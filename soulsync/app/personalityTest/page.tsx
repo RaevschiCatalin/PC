@@ -91,9 +91,9 @@ const PersonalityTest: React.FC = () => {
         }
         updateQuiz(E, A, C, N, O);
         console.log(E, A, C, N, O);
-        alert('Quiz Completed!');
-
-        router.push('/testReport');
+        // alert('Quiz Completed!');
+        //redirect to home page
+        router.push('/');
       }
     } else {
       alert('Please select an answer before proceeding.');
