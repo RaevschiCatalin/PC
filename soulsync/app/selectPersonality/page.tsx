@@ -1,8 +1,8 @@
-'use client'
+'use client';
 import Link from "next/link";
 import { useState, ChangeEvent } from 'react';
-import {updateQuiz} from "../../backend";
-import {useRouter} from "next/navigation";
+import { updateQuiz } from "../../backend";
+import { useRouter } from "next/navigation";
 
 export default function SelectPersonality() {
     const router = useRouter();
@@ -14,14 +14,36 @@ export default function SelectPersonality() {
         "ISTP", "ISFP", "ESTP", "ESFP"
     ];
 
+    const personalityTypeScores: { [key: string]: number[] } = {
+        "INTJ": [15, 12, 18, 35, 30],
+        "INTP": [10, 10, 15, 25, 40],
+        "ENTJ": [30, 14, 28, 20, 22],
+        "ENTP": [28, 16, 24, 18, 30],
+        "INFJ": [12, 20, 14, 32, 28],
+        "INFP": [8, 18, 12, 30, 35],
+        "ENFJ": [25, 22, 20, 15, 25],
+        "ENFP": [20, 18, 18, 20, 30],
+        "ISTJ": [18, 10, 28, 35, 12],
+        "ISFJ": [16, 18, 20, 38, 15],
+        "ESTJ": [35, 14, 32, 22, 10],
+        "ESFJ": [30, 20, 26, 25, 18],
+        "ISTP": [20, 12, 18, 30, 14],
+        "ISFP": [18, 14, 16, 32, 20],
+        "ESTP": [35, 18, 24, 20, 18],
+        "ESFP": [30, 20, 22, 25, 22],
+    };
+
     const handleSelection = (e: ChangeEvent<HTMLSelectElement>) => {
         setSelectedType(e.target.value);
     };
 
     const handleSubmit = () => {
-        //de facut o functie care baga parametrii in functie de personalitatea selectata
-        updateQuiz(23,32,12,45,7);
-        router.push('/match');
+        if (selectedType) {
+            const [E, A, C, N, O] = personalityTypeScores[selectedType];
+            updateQuiz(E, A, C, N, O);
+            alert('Personality type selected successfully!');
+            router.push('/match');
+        }
     };
 
     return (
@@ -33,7 +55,7 @@ export default function SelectPersonality() {
                 If you already know your personality type, select it below.
             </p>
             <form className="flex flex-col items-center z-30" onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
-                <select 
+                <select
                     value={selectedType}
                     onChange={handleSelection}
                     className="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
@@ -53,15 +75,11 @@ export default function SelectPersonality() {
                     }`}
                     disabled={!selectedType}
                 >
-                    {/*<Link href={'/match'}>*/}
-                        <h1 className="text-xl font-bold">
-                            Continue
-                        </h1>
-                    {/*</Link>*/}
+                    <h1 className="text-xl font-bold">
+                        Continue
+                    </h1>
                 </button>
             </form>
         </div>
     );
 }
-
-

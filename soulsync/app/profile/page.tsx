@@ -24,8 +24,6 @@ export default function Profile() {
     const auth = getAuth();
     const profileId = getProfileId();
     useEffect(() => {
-        console.log('Fetching user data...');
-        console.log(userData);
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const data = await fetchUserData();
@@ -47,7 +45,6 @@ export default function Profile() {
 
         return () => unsubscribe();
     }, [auth]);
-    // Calculate age from date of birth
     // @ts-ignore
     const calculateAge = (dob) => {
         if (!dob) return '';
@@ -100,6 +97,12 @@ export default function Profile() {
                         <li><b>Neuroticism</b>: {userData.N.toString()} (Average Score is: 38)</li>
                         <li><b>Openness to Experience</b>: {userData.O.toString()} (Average Score is: 8)</li>
                     </ul>
+                    <button
+                        className="px-6 py-3 my-6 bg-purple-300 text-white rounded-full border border-black transition-all hover:bg-white hover:text-black text-center text-md font-inter">
+                        <Link href="testReport">
+                            View Detailed Report
+                        </Link>
+                    </button>
                 </div>
 
                 <div className="mb-6">
@@ -117,7 +120,7 @@ export default function Profile() {
                     </p>
                 </div>
                 <div className="text-center text-xl mt-8">
-                    <button className="px-6 py-3 bg-white text-black rounded-full border border-black transition-all hover:bg-black hover:text-white text-center text-md font-inter">
+                    <button className="px-6 py-3 bg-yellow-200 text-black rounded-full border border-black transition-all hover:bg-black hover:text-white text-center text-md font-inter">
                         <Link href={"/personalityTest"}>
                             Redo Personality Test
                         </Link>

@@ -270,10 +270,96 @@ async function getTestScores(){
 }
 
 export async function getPersonalityResults() {
-    const scores = await getTestScores();
-    if (!scores) {
+    const score = await getTestScores();
+
+    if (score) {
+        console.log("Retrieved Scores:", score);
+    } else {
+        console.error("No scores retrieved.");
         return null;
     }
+
+
+    const scores  = {
+        E: score.E,
+        A: score.A,
+        C: score.C,
+        N: score.N,
+        O: score.O
+    };
+
+    const personalityTypes = {
+        E: {
+            "-": {
+                scoreRange: "<16",
+                desc: "Introvert, you prefer solitude or the company of a few close friends over large social gatherings. You find peace and rejuvenation in quiet, solitary environments and may feel drained after too much social interaction. Your introspective nature allows you to explore your thoughts and feelings deeply."
+            },
+            "=": {
+                scoreRange: "16-24",
+                desc: "Average, you exhibit a balance between introversion and extroversion. You are comfortable in social situations but also value your alone time. You can navigate different social environments with ease, neither feeling overwhelmed by too much interaction nor isolated by too little."
+            },
+            "+": {
+                scoreRange: ">24",
+                desc: "Extrovert, you thrive in social settings and enjoy being around people. You are energized by interactions and often seek out opportunities to connect with others. Your outgoing nature makes you adept at networking and forming new relationships. You are often the life of the party and enjoy lively discussions and group activities."
+            }
+        },
+        A: {
+            "-": {
+                scoreRange: "<16",
+                desc: "Competitive, you have a strong desire to win and assert your ideas. You enjoy challenges and are motivated by the drive to succeed. While this can lead to significant achievements, it can sometimes make collaboration difficult as you might prioritize your own goals over group harmony. Your assertiveness can be a powerful tool when used constructively."
+            },
+            "=": {
+                scoreRange: "16-24",
+                desc: "Average, you maintain a balance between being assertive and agreeable. You can assert your opinions and needs when necessary but also value cooperation and harmony. This makes you adaptable in various social and professional settings, able to stand up for yourself while also maintaining positive relationships."
+            },
+            "+": {
+                scoreRange: ">24",
+                desc: "Agreeable, you prioritize getting along with others and often go out of your way to avoid conflicts. You are empathetic, considerate, and cooperative, making you a great team player. Your desire for harmony can sometimes lead you to compromise too much, but it also fosters strong, positive relationships with those around you."
+            }
+        },
+        C: {
+            "-": {
+                scoreRange: "<16",
+                desc: "Spontaneous, you thrive on adventure and unpredictability. You prefer to live in the moment and enjoy flexibility in your plans. This can make you highly adaptable and open to new experiences, but it might also lead to challenges in maintaining long-term commitments and responsibilities."
+            },
+            "=": {
+                scoreRange: "16-24",
+                desc: "Average, you exhibit a balance between spontaneity and conscientiousness. You can appreciate the value of planning and structure while also remaining open to unexpected opportunities. This balance allows you to manage responsibilities effectively while still enjoying life's surprises."
+            },
+            "+": {
+                scoreRange: ">24",
+                desc: "Conscientious, you prefer a structured and organized approach to life. You set goals, plan meticulously, and follow through with your commitments. Your attention to detail and reliability make you a dependable individual, though sometimes you might struggle with flexibility and spontaneity."
+            }
+        },
+        N: {
+            "-": {
+                scoreRange: "<16",
+                desc: "Reactive, you experience your emotions intensely and often wear them on your sleeve. You may find it challenging to contain your feelings, leading to expressive reactions to situations. This emotional transparency can foster deep connections with others, but it might also make emotional regulation more difficult."
+            },
+            "=": {
+                scoreRange: "16-24",
+                desc: "Average, you maintain a balanced approach to emotional experiences. You can express your feelings when appropriate but also manage them effectively. This emotional equilibrium allows you to navigate life's ups and downs with resilience, neither overly reactive nor detached."
+            },
+            "+": {
+                scoreRange: ">24",
+                desc: "Stable, you possess a calm and steady emotional disposition. You are less likely to be overwhelmed by stress and can maintain your composure in difficult situations. Your stability allows you to provide support to others and handle challenges with a level head, though you might sometimes appear emotionally distant."
+            }
+        },
+        O: {
+            "-": {
+                scoreRange: "<16",
+                desc: "Consistent, you value routine and predictability. You prefer a structured life where you can plan and anticipate outcomes. This consistency can provide a sense of security and reliability, though it might limit your openness to new experiences and spontaneous changes."
+            },
+            "=": {
+                scoreRange: "16-24",
+                desc: "Average, you balance consistency with openness to new experiences. You can appreciate the stability of routine while remaining open to occasional changes and new ideas. This makes you adaptable and versatile, able to enjoy both the familiar and the novel aspects of life."
+            },
+            "+": {
+                scoreRange: ">24",
+                desc: "Open, you are curious and eager to explore new experiences and ideas. You thrive on variety and often seek out new adventures and learning opportunities. Your open-mindedness can lead to a rich, diverse life, though it might also make it challenging to settle into long-term routines."
+            }
+        }
+    };
 
     let results = {
         E: "",
@@ -283,24 +369,21 @@ export async function getPersonalityResults() {
         O: ""
     };
 
-    // Load the personality types from the JSON file
-    const { personalityTypes } = personalityTypes;
-
-    // Helper function to determine the category based on score
     const getCategory = (score) => {
         if (score < 16) return "-";
         if (score >= 16 && score <= 24) return "=";
         if (score > 24) return "+";
     };
 
-    // Assign descriptions based on the score category
     for (let type in results) {
         let category = getCategory(scores[type]);
         results[type] = personalityTypes[type][category].desc;
     }
-    console.log(results);
+
+
     return results;
 }
+
 
 
 
