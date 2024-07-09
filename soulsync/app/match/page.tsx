@@ -4,21 +4,23 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import HeartIcon from '../../public/assets/icons/heart.svg';
 import CrossedHeartIcon from '../../public/assets/icons/crossed-heart.svg';
-import getProfileId, {fetchUserList, fetchUserData, matchUsers, getCurrentUser} from '../../backend/index'; // Adjust the path accordingly
+import getProfileId, { fetchUserList, fetchUserData, matchUsers, getCurrentUser } from '../../backend/index'; // Adjust the path accordingly
 import Loading from '../../components/Loading';
-
+import { likeProfile, onMatchUpdate } from '../../backend/matching';
 
 export default function Match() {
   const [user, setUser] = useState(null);
   const [likeStatus, setLikeStatus] = useState('');
   const [matchFilters, setMatchFilters] = useState({
-    bestMatch: false,
+    bestMatch: true,
     oppositeMatch: false,
   });
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [currentUserProfileId, setCurrentUserProfileId] = useState(null);
   const [currentUserData, setCurrentUserData] = useState(null);
   const [potentialMatches, setPotentialMatches] = useState([]);
+  const [likedProfiles, setLikedProfiles] = useState([]);
+  const [matches, setMatches] = useState({});  // To store real-time match data
 
   useEffect(() => {
     async function fetchProfileIdAndData() {
@@ -26,7 +28,6 @@ export default function Match() {
       const profileId = await getProfileId();
       setCurrentUserProfileId(profileId);
       const userData = await fetchUserData(); // Assuming fetchUserData() fetches the current user's data
-      // @ts-ignore
       setCurrentUserData(userData);
     }
     fetchProfileIdAndData();
@@ -36,7 +37,7 @@ export default function Match() {
     async function fetchMatches() {
       if (currentUserProfileId && currentUserData) {
         try {
-          const matches = await fetchUserList(0, 3, currentUserData); // Adjust minPercent and numberOfUsers as needed
+          const matches = await fetchUserList(50, 10, currentUserData); // Adjust minPercent and numberOfUsers as needed
           if (matches && matches.users && matches.users.length > 0) {
             setPotentialMatches(matches.users);
             setUser(matches.users[0]);
@@ -52,15 +53,42 @@ export default function Match() {
     fetchMatches();
   }, [currentUserProfileId, currentUserData]);
 
-  const handleLike = () => {
-    setLikeStatus('liked');
+  useEffect(() => {
+    // Set up real-time match listener
+    const unsubscribe = onMatchUpdate((newMatches) => {
+      setMatches(newMatches);
+      console.log('New matches:', newMatches);
+    });
+
+    // Clean up listener on component unmount
+    return () => unsubscribe();
+  }, []);
+
+  const handleNextUser = () => {
+    setLikeStatus('');
+    setPotentialMatches((prevMatches) => prevMatches.slice(1));
+    setUser(potentialMatches[1] || null);
+  };
+
+  const handleLike = async () => {
+    if (user) {
+      try {
+        await likeProfile(user.id);  // Call the new likeProfile function
+        setLikedProfiles((prevLikedProfiles) => [
+          ...prevLikedProfiles,
+          user.id,
+        ]);
+        handleNextUser();
+      } catch (error) {
+        console.error("Error liking profile:", error);
+      }
+    }
   };
 
   const handleDislike = () => {
-    setLikeStatus('disliked');
+    handleNextUser();
   };
 
-  // @ts-ignore
   const handleCheckboxChange = (e) => {
     const { name, checked } = e.target;
     setMatchFilters((prevFilters) => ({
@@ -75,8 +103,6 @@ export default function Match() {
 
   const compatibilityScore = user && currentUserData ? matchUsers(currentUserData, user) : null;
 
-  // @ts-ignore
-  // @ts-ignore
   return (
       <div className="relative min-h-screen bg-white flex flex-col items-center pt-20">
         <div className="absolute top-0 right-0 pt-5 pr-5">
@@ -118,8 +144,7 @@ export default function Match() {
               <div className="flex justify-center gap-40 mt-10">
                 <button
                     onClick={handleDislike}
-                    className={`relative flex items-center justify-center w-16 h-16 rounded-full border border-black ${likeStatus === 'disliked' ? 'opacity-50 cursor-not-allowed' : 'group hover:bg-red-500 hover:text-white hover:border-white'}`}
-                    disabled={likeStatus === 'disliked'}
+                    className="relative flex items-center justify-center w-16 h-16 rounded-full border border-black group hover:bg-red-500 hover:text-white hover:border-white"
                 >
                   <div className="absolute inset-0 flex items-center justify-center">
                     <Image src={CrossedHeartIcon} alt="Dislike" className="w-8 h-8 group-hover:fill-white" />
@@ -127,8 +152,7 @@ export default function Match() {
                 </button>
                 <button
                     onClick={handleLike}
-                    className={`relative flex items-center justify-center w-16 h-16 rounded-full border border-black ${likeStatus === 'liked' ? 'opacity-50 cursor-not-allowed' : 'group hover:bg-green-300 hover:text-white hover:border-white'}`}
-                    disabled={likeStatus === 'liked'}
+                    className="relative flex items-center justify-center w-16 h-16 rounded-full border border-black group hover:bg-green-300 hover:text-white hover:border-white"
                 >
                   <div className="absolute inset-0 flex items-center justify-center">
                     <Image src={HeartIcon} alt="Like" className="w-8 h-8" />

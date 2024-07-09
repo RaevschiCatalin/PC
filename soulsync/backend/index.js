@@ -4,8 +4,7 @@ import { getID, setID } from "./globals.js";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import User from "./user.js";
-import path from 'path';
-import {personalityTypes} from './personalityTypes.json' assert { type: 'json' };
+
 
 const auth = getAuth();
 const firestore = getFirestore();
@@ -433,6 +432,7 @@ export async function fetchUserList(minPercent, numberOfUsers, currentUser){
             else if (k == numberOfUsers)
                 break
         }
+
         return userList;
     }
     catch (error){
