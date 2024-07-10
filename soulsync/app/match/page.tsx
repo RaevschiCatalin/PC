@@ -11,11 +11,7 @@ import { likeProfile, onMatchUpdate } from '../../backend/matching';
 export default function Match() {
   const [user, setUser] = useState(null);
   const [likeStatus, setLikeStatus] = useState('');
-  const [matchFilters, setMatchFilters] = useState({
-    bestMatch: true,
-    oppositeMatch: false,
-  });
-  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [isBestMatch, setIsBestMatch] = useState(true); // Toggle state
   const [currentUserProfileId, setCurrentUserProfileId] = useState(null);
   const [currentUserData, setCurrentUserData] = useState(null);
   const [potentialMatches, setPotentialMatches] = useState([]);
@@ -37,7 +33,8 @@ export default function Match() {
     async function fetchMatches() {
       if (currentUserProfileId && currentUserData) {
         try {
-          const matches = await fetchUserList(50, 10, currentUserData); // Adjust minPercent and numberOfUsers as needed
+          const minPercent = isBestMatch ? 80 : 1; // Adjust minPercent based on toggle state
+          const matches = await fetchUserList(minPercent, 10, currentUserData); // Adjust numberOfUsers as needed
           if (matches && matches.users && matches.users.length > 0) {
             setPotentialMatches(matches.users);
             setUser(matches.users[0]);
@@ -51,7 +48,7 @@ export default function Match() {
       }
     }
     fetchMatches();
-  }, [currentUserProfileId, currentUserData]);
+  }, [currentUserProfileId, currentUserData, isBestMatch]); // Re-fetch when toggle state changes
 
   useEffect(() => {
     // Set up real-time match listener
@@ -60,8 +57,12 @@ export default function Match() {
       console.log('New matches:', newMatches);
     });
 
-    // Clean up listener on component unmount
-    return () => unsubscribe();
+
+    return () => {
+      if (typeof unsubscribe === 'function') {
+        unsubscribe();
+      }
+    };
   }, []);
 
   const handleNextUser = () => {
@@ -89,16 +90,8 @@ export default function Match() {
     handleNextUser();
   };
 
-  const handleCheckboxChange = (e) => {
-    const { name, checked } = e.target;
-    setMatchFilters((prevFilters) => ({
-      ...prevFilters,
-      [name]: checked,
-    }));
-  };
-
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
+  const handleToggle = () => {
+    setIsBestMatch(!isBestMatch);
   };
 
   const compatibilityScore = user && currentUserData ? matchUsers(currentUserData, user) : null;
@@ -106,32 +99,16 @@ export default function Match() {
   return (
       <div className="relative min-h-screen bg-white flex flex-col items-center pt-20">
         <div className="absolute top-0 right-0 pt-5 pr-5">
-          <button onClick={toggleDropdown} className="py-2 px-4 rounded-full hover:bg-gray-200">
-            <img src="/assets/icons/settings.png" alt="Settings" className="w-5 h-5" />
-          </button>
-          {dropdownVisible && (
-              <div className="absolute right-0 mt-2 py-2 w-48 bg-white border rounded shadow-xl">
-                <h2 className="text-lg font-semibold px-4 py-2">Filters</h2>
-                <label className="block text-gray-800 text-sm px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  <input
-                      type="checkbox"
-                      name="bestMatch"
-                      checked={matchFilters.bestMatch}
-                      onChange={handleCheckboxChange}
-                      className="mr-2"
-                  /> Best Match
-                </label>
-                <label className="block text-gray-800 text-sm px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  <input
-                      type="checkbox"
-                      name="oppositeMatch"
-                      checked={matchFilters.oppositeMatch}
-                      onChange={handleCheckboxChange}
-                      className="mr-2"
-                  /> Opposites Match
-                </label>
-              </div>
-          )}
+          <label className="inline-flex items-center cursor-pointer">
+            <input
+                type="checkbox"
+                className="sr-only peer"
+                checked={isBestMatch}
+                onChange={handleToggle}
+            />
+            <div className="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-teal-300 dark:peer-focus:ring-teal-500 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-500"></div>
+            <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{isBestMatch ? 'Best Match' : 'All Matches'}</span>
+          </label>
         </div>
         <h1 className="text-5xl font-bold mb-20">Take a look at this person</h1>
         {user ? (
