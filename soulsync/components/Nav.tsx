@@ -27,11 +27,16 @@ export default function Nav() {
         <Navbar fluid rounded>
             <Navbar.Brand as={Link} href="/" >
                 <Image src={logo} className="mr-3 h-8 sm:h-9" alt="Logo" width={50} height={50} />
-                <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white gap-1"><span className="logo_gradinet">Soul</span>Sync</span>
+                <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white gap-1"><span className="logo_gradinet">Soul</span>Sync</span>
             </Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse>
-
+                <Link href="/match" className="px-3 py-2 rounded-lg text-lg  font-bold  text-gray-900 hover:underline hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700">
+                    Match
+                </Link>
+                <Link href="/chat" className="px-3 py-2 rounded-lg text-lg font-bold text-gray-900 hover:underline  hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700">
+                    Chat
+                </Link>
                 {isUserLoggedIn ? (
                     <div className="flex gap-3 md:gap-5">
                         <Link href="/profile">

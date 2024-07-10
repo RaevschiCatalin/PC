@@ -57,7 +57,6 @@ export default function Match() {
       console.log('New matches:', newMatches);
     });
 
-
     return () => {
       if (typeof unsubscribe === 'function') {
         unsubscribe();
