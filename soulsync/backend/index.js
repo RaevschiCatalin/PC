@@ -465,12 +465,3 @@ export async function fetchUserList(minPercent, numberOfUsers, currentUser) {
         console.error("Error fetching user list:", error);
     }
 }
-
-
-
-
-// testare functie noua
-// const currentUser = new User("placeholder", 32, 12, 23, 45, 7,
-//    "placeholder", "placeholder", "placeholder", "placeholder")
-// console.log(await fetchUserList(0,3, currentUser))
-

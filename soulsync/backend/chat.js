@@ -1,5 +1,5 @@
-import { getCurrentUser } from "./index";
-import { get, ref, set } from "firebase/database";
+import { getCurrentUser } from "./index.js";
+import { get, ref, set , push } from "firebase/database";
 import { database } from "../database/firebase.js";
 
 //functie ce da fetch la ID-urile de chat-uri a utilizatorului curent, returnat sub forma de lista
@@ -32,25 +32,13 @@ export async function getChatList(){
 
 //functie ce baga un mesaj nou in chat, are nevoie de mesaj si ID-ul chatului
 export async function sendMessage(message, chatID){
-    const currentUser = await getCurrentUser();
+    const currentUser = getCurrentUser();
     //erori
-    if (!currentUser) {
-        console.error("No user authenticated.");
-        return;
-    }
-    if (!message){
-        console.error("No message.");
-        return;
-    }
-    if (!chatID){
-        console.error("No chatID.");
-        return;
-    }
     //baga mesajul nou in chat
     try {
         const chatsRef = ref(database, 'chats/'+chatID+'/messages');
-        await set(chatsRef, {
-            [message]: {
+        await push(chatsRef, {
+            [message]:{
                 sender: currentUser.uid
             }
         })
