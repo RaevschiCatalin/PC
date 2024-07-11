@@ -31,6 +31,7 @@ export async function likeProfile(likedUserId) {
     }
 }
 
+//modificat ca sa creeze si chat, nu are sens sa aiba functii separate
 export async function createMatch(userId, likedUserId) {
     if (!userId || !likedUserId) {
         console.error("User IDs are required to create a match.");
@@ -51,6 +52,24 @@ export async function createMatch(userId, likedUserId) {
         console.log(`Match created between ${userId} and ${likedUserId}`);
     } catch (error) {
         console.error("Error creating match:", error);
+    }
+
+    //aici e adaugat chat-ul si structura de arbore in db
+    try {
+        const chatsRef = ref(database, `chats/${matchId}`);
+
+        await set(chatsRef, {
+            [userId]: true,
+            [likedUserId]: true,
+            messages: {
+                "This is the start of your new chat!":{
+                    sender: "system"
+                }
+            },
+        });
+        console.log(`Chat created between ${userId} and ${likedUserId}`);
+    } catch (error) {
+        console.error("Error creating chat:", error);
     }
 }
 
