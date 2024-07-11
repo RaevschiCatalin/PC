@@ -408,13 +408,24 @@ export async function fetchUserList(minPercent, numberOfUsers, currentUser) {
         let userList = {
             users: []
         };
+
+        const currentUserId = await getCurrentUser();
+        if (!currentUserId) {
+            throw new Error("No user authenticated.");
+        }
+
+        // Get the list of users liked by the current user
+        const likesRef = ref(database, `likes/${currentUserId.uid}`);
+        const likesSnapshot = await get(likesRef);
+        const likedUsers = likesSnapshot.val() ? Object.keys(likesSnapshot.val()) : [];
+
         const userRef = ref(database, 'users/');
         const userSnapshot = await get(userRef);
         const userData = userSnapshot.val();
-        const currentUserId = await getCurrentUser();
-        for (let userId in userData) {
 
-            if (userId === currentUserId.uid) {
+        for (let userId in userData) {
+            // Skip the current user and liked users
+            if (userId === currentUserId.uid || likedUsers.includes(userId)) {
                 continue;
             }
 

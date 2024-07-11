@@ -36,7 +36,7 @@ export default function Match() {
       if (currentUserProfileId && currentUserData) {
         try {
           const minPercent = isBestMatch ? 80 : 1;
-          const matches = await fetchUserList(minPercent, 10, currentUserData);
+          const matches = await fetchUserList(minPercent, 20, currentUserData);
           if (matches && matches.users && matches.users.length > 0) {
             setPotentialMatches(matches.users);
             setUser(matches.users[0]);
