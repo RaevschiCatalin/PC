@@ -4,27 +4,29 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import HeartIcon from '../../public/assets/icons/heart.svg';
 import CrossedHeartIcon from '../../public/assets/icons/crossed-heart.svg';
-import getProfileId, { fetchUserList, fetchUserData, matchUsers, getCurrentUser } from '../../backend/index'; // Adjust the path accordingly
+import { fetchUserList, fetchUserData, getCurrentUser, matchUsers } from '../../backend/index';
 import Loading from '../../components/Loading';
 import { likeProfile, onMatchUpdate } from '../../backend/matching';
+import getProfileId from "../../backend";
 
 export default function Match() {
   const [user, setUser] = useState(null);
   const [likeStatus, setLikeStatus] = useState('');
-  const [isBestMatch, setIsBestMatch] = useState(true); // Toggle state
+  const [isBestMatch, setIsBestMatch] = useState(true);
   const [currentUserProfileId, setCurrentUserProfileId] = useState(null);
   const [currentUserData, setCurrentUserData] = useState(null);
   const [potentialMatches, setPotentialMatches] = useState([]);
   const [likedProfiles, setLikedProfiles] = useState([]);
-  const [matches, setMatches] = useState({});  // To store real-time match data
+  const [matches, setMatches] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchProfileIdAndData() {
-      const currentUserProfileId = await getCurrentUser();
       const profileId = await getProfileId();
       setCurrentUserProfileId(profileId);
-      const userData = await fetchUserData(); // Assuming fetchUserData() fetches the current user's data
+      const userData = await fetchUserData();
       setCurrentUserData(userData);
+      setLoading(false);
     }
     fetchProfileIdAndData();
   }, []);
@@ -33,8 +35,8 @@ export default function Match() {
     async function fetchMatches() {
       if (currentUserProfileId && currentUserData) {
         try {
-          const minPercent = isBestMatch ? 80 : 1; // Adjust minPercent based on toggle state
-          const matches = await fetchUserList(minPercent, 10, currentUserData); // Adjust numberOfUsers as needed
+          const minPercent = isBestMatch ? 80 : 1;
+          const matches = await fetchUserList(minPercent, 10, currentUserData);
           if (matches && matches.users && matches.users.length > 0) {
             setPotentialMatches(matches.users);
             setUser(matches.users[0]);
@@ -48,15 +50,13 @@ export default function Match() {
       }
     }
     fetchMatches();
-  }, [currentUserProfileId, currentUserData, isBestMatch]); // Re-fetch when toggle state changes
+  }, [currentUserProfileId, currentUserData, isBestMatch]);
 
   useEffect(() => {
-    // Set up real-time match listener
     const unsubscribe = onMatchUpdate((newMatches) => {
       setMatches(newMatches);
       console.log('New matches:', newMatches);
     });
-
     return () => {
       if (typeof unsubscribe === 'function') {
         unsubscribe();
@@ -73,11 +73,8 @@ export default function Match() {
   const handleLike = async () => {
     if (user) {
       try {
-        await likeProfile(user.id);  // Call the new likeProfile function
-        setLikedProfiles((prevLikedProfiles) => [
-          ...prevLikedProfiles,
-          user.id,
-        ]);
+        await likeProfile(user.id);
+        setLikedProfiles((prevLikedProfiles) => [...prevLikedProfiles, user.id]);
         handleNextUser();
       } catch (error) {
         console.error("Error liking profile:", error);
@@ -110,10 +107,12 @@ export default function Match() {
           </label>
         </div>
         <h1 className="text-5xl font-bold mb-20">Take a look at this person</h1>
-        {user ? (
+        {loading ? (
+            <Loading />
+        ) : user ? (
             <div className="bg-white shadow-lg rounded-lg gap-1 p-8 max-w-2xl w-full text-center" style={{ transform: 'scale(1.2)' }}>
               <h2 className="text-4xl font-semibold green_gradient">{user.name}</h2>
-              <p className="text-lg mt-4 mb-6"><b className="text-3xl italic">Personality:</b><br/><b>Extroversion:</b> {user.E} <br/> <b> Agreeableness:</b> {user.A} <br/> <b>Conscientiousness:</b> {user.C} <br/><b>Neuroticism:</b> {user.N} <br/> <b>Openness to Experience:</b> {user.O}</p>
+              <p className="text-lg mt-4 mb-6"><b className="text-3xl italic">Personality:</b><br/><b>Extroversion:</b> {user.E} <br/> <b>Agreeableness:</b> {user.A} <br/> <b>Conscientiousness:</b> {user.C} <br/><b>Neuroticism:</b> {user.N} <br/> <b>Openness to Experience:</b> {user.O}</p>
               <p className="text-gray-700 text-lg"><b className="text-3xl italic">A brief description:</b> <br/> {user.desc}</p>
               <p className="text-lg mt-4 mb-6"><b className="text-3xl italic">Compatibility Score:</b> {compatibilityScore}%
               </p>

@@ -66,6 +66,7 @@ export async function pushDataToDatabase(data) {
         const newProfileRef = push(profilesRef);
 
         await set(newProfileRef, {
+            userId: user.uid, // Ensure userId is saved in the profile
             name: data.name,
             dob: data.yearOfBirth,
             city: data.city,
@@ -86,6 +87,7 @@ export async function pushDataToDatabase(data) {
         console.error(error);
     }
 }
+
 export async function updateUserDescription(description){
     const user = getCurrentUser();
     if (!user) {
@@ -232,6 +234,7 @@ export async function fetchUserData() {
                 C: data.C || 0,
                 N: data.N || 0,
                 O: data.O || 0,
+                id: data.userId || ''
             };
         } else {
             console.log('No such profile!');
@@ -399,24 +402,37 @@ export function matchUsers(user0, user1) {
 //minPercent -> procentul minim de match cautat
 //numberOfUsers -> numarul de useri cautati
 //currentUser -> utilizatorul curent (subject to change)
-export async function fetchUserList(minPercent, numberOfUsers, currentUser){
+export async function fetchUserList(minPercent, numberOfUsers, currentUser) {
     try {
-        let k = 0
-        let userList ={
+        let k = 0;
+        let userList = {
             users: []
-        }
-        const userRef = ref(database,'users/')
-        const userSnapshot = await get(userRef)
+        };
+        const userRef = ref(database, 'users/');
+        const userSnapshot = await get(userRef);
         const userData = userSnapshot.val();
-        for (let data in userData) {
-            let profileRef = ref(database, 'profiles/' + userData[data].profileId)
+        const currentUserId = await getCurrentUser();
+        for (let userId in userData) {
+
+            if (userId === currentUserId.uid) {
+                continue;
+            }
+
+            let profileRef = ref(database, 'profiles/' + userData[userId].profileId);
             let profileSnapshot = await get(profileRef);
             let profileData = profileSnapshot.val();
-            let user = new User(userData[data].profileId, profileData.E, profileData.A, profileData.C, profileData.N, profileData.O,
-                profileData.city, profileData.description, profileData.dob, profileData.name)
-            if (matchUsers(currentUser, user) >= minPercent && k < numberOfUsers){
+
+            if (!profileData) {
+                continue;
+            }
+
+            let user = new User(userId, profileData.E, profileData.A, profileData.C, profileData.N, profileData.O,
+                profileData.city, profileData.description, profileData.dob, profileData.name);
+
+            if (matchUsers(currentUser, user) >= minPercent && k < numberOfUsers) {
                 userList.users.push({
-                    "id": userData[data].profileId,
+                    "id": userId,
+                    "profileId": userData[userId].profileId,
                     "E": user.E,
                     "A": user.A,
                     "C": user.C,
@@ -426,19 +442,21 @@ export async function fetchUserList(minPercent, numberOfUsers, currentUser){
                     "desc": user.desc,
                     "dob": user.dob,
                     "name": user.name
-                })
-                k += 1
+                });
+                k += 1;
+            } else if (k == numberOfUsers) {
+                break;
             }
-            else if (k == numberOfUsers)
-                break
         }
 
         return userList;
-    }
-    catch (error){
+    } catch (error) {
         console.error("Error fetching user list:", error);
     }
 }
+
+
+
 
 // testare functie noua
 // const currentUser = new User("placeholder", 32, 12, 23, 45, 7,

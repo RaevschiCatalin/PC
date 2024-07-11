@@ -42,7 +42,7 @@ export default function SelectPersonality() {
             const [E, A, C, N, O] = personalityTypeScores[selectedType];
             updateQuiz(E, A, C, N, O);
             alert('Personality type selected successfully!');
-            router.push('/match');
+            router.push('/testReport');
         }
     };
 
