@@ -39,7 +39,7 @@ export default function Login() {
 
   return (
       <div className="flex justify-center items-center h-screen pb-10">
-        <div className="w-full max-w-md text-center">
+        <div className="w-full max-w-md">
           <div className="flex justify-center mb-12">
             <Image
                 src={svgIcon}

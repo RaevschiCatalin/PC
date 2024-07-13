@@ -93,7 +93,7 @@ export default function Match() {
   const compatibilityScore = user && currentUserData ? matchUsers(currentUserData, user) : null;
 
   return (
-      <div className="relative min-h-screen bg-white flex flex-col items-center pt-20">
+      <div className="relative min-h-screen bg-white flex flex-col items-center pt-20 pb-20">
         <div className="absolute top-0 right-0 pt-5 pr-5">
           <label className="inline-flex items-center cursor-pointer">
             <input

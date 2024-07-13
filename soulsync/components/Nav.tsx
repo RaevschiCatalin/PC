@@ -42,13 +42,13 @@ export default function Nav() {
                         <Link href="/profile">
                             <Image
                                 src="/assets/icons/user.png"
-                                width={32}
-                                height={32}
+                                width={37}
+                                height={37}
                                 alt="user"
-                                className="rounded-full border-2 border-gray-700"
+                                className="rounded-full border-2 border-gray-700 mt-2 mr-2"
                             />
                         </Link>
-                        <button type="button" className="black_btn" onClick={handleSignOut}>Logout</button>
+                        <button type="button" className="black_btn mt-1" onClick={handleSignOut}>Logout</button>
                     </div>
                 ) : (
                     <div className="flex gap-3 md:gap-5">

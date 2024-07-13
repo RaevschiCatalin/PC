@@ -46,6 +46,7 @@ export default function Chat() {
         fetchMessages();
     }, [selectedChat]);
 
+
     const handleSendMessage = async () => {
         if (newMessage.trim() === '') return;
         await sendMessage(newMessage, selectedChat);
@@ -89,7 +90,7 @@ export default function Chat() {
                             {chatList.map(({ chatID, chatName }) => (
                                 <li
                                     key={chatID}
-                                    className="p-2 hover:bg-blue-50 cursor-pointer"
+                                    className="p-2 hover:bg-blue-50 cursor-pointer relative z-50"
                                     onClick={() => setSelectedChat(chatID)}
                                 >
                                     {chatName}

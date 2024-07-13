@@ -110,7 +110,7 @@ export default function Register() {
                   name="acceptTerms"
                   checked={formData.acceptTerms}
                   onChange={handleChange}
-                  className="mr-2"
+                  className="mr-2 z-10"
 
               />
               <label className="text-sm">I accept the <span className='text-blue-500'><Link href='/terms'>terms and conditions</Link></span> </label>
