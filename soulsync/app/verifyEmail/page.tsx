@@ -4,6 +4,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../database/firebase';
 import { useRouter } from 'next/navigation';
 import { sendEmailVerification } from 'firebase/auth';
+import LoadingComponent from "../../components/Loading";
 
 export default function VerifyEmail() {
     const router = useRouter();
@@ -25,7 +26,7 @@ export default function VerifyEmail() {
         }
     };
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <LoadingComponent />;
     if (error) return <p>Error: {error.message}</p>;
 
     return (
@@ -40,6 +41,8 @@ export default function VerifyEmail() {
                 >
                     {emailSent ? 'Verification Email Sent' : 'Resend Verification Email'}
                 </button>
+                <p className="mt-4">If you have not received the email, please press the button again, check the spam folder.</p>
+                <h1 className="text-md font-semibold mt-8">After confirmation, please refresh the page or press F5 button</h1>
             </div>
         </div>
     );
